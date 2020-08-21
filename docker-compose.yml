@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  webserver:
+    build: .
+    volumes:
+      - ./portfolio:/portfolio    
+    ports:
+      - "8000:8000"
+    #command: >
+      #sh -c "python manage.py migrate && python manage.py runserver"
+
+
+
+
+
+#docker-compose run web python src/profiles_project/manage.py createsuperuser
+#https://stackoverflow.com/questions/33992867/how-do-you-perform-django-database-migrations-when-using-docker-compose
+#real time access to container, for sync real time withour rebuilding each time we make a change
+    #links:
+    #  - db
