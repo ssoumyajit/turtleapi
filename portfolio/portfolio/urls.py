@@ -279,6 +279,19 @@ class Sharing(models.Model):
         ordering = ['s_date']
     
 
+class Blog(models.Model):
+    b_user = models.ForeignKey('Portfolio', on_delete=models.CASCADE, related_name="blog")
+    b_title = models.CharField(max_length = 255, default = "")
+    b_date = models.DateField()
+    b_content = models.TextField(default = "")
+    b_photo = models.ImageField(default = "", upload_to = "blog/")
+
+    class Meta:
+        ordering = ['b_date']
+
+
+
+
 class Fileupload(models.Model):
     file = models.ImageField(default = "", upload_to = "uploads/")
     text = models.CharField(default = "", max_length = 255)
@@ -331,6 +344,12 @@ class FileuploadSerializers(serializers.ModelSerializer):
         model = Fileupload
         fields = "__all__"
 
+class BlogSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = "__all__"
+
+
 #class PortfolioSerializers(serializers.HyperlinkedModelSerializer):
 class PortfolioSerializers(serializers.ModelSerializer):
     workshop = WorkshopSerializers(many = True, read_only = True)
@@ -378,6 +397,10 @@ class SharingViewSet(viewsets.ModelViewSet):
     queryset = Sharing.objects.all()
     serializer_class = SharingSerializers   
 
+class BlogViewSet(viewsets.ModelViewSet):
+    queryset = Blog.objects.all()
+    serializer_class = BlogSerializers
+
 class FileuploadViewSet(viewsets.ModelViewSet):
     #parser_classes = (MultiPartParser, FormParser)
     queryset = Fileupload.objects.all()
@@ -392,6 +415,8 @@ router.register(r'gallery', GalleryViewSet)
 router.register(r'milestone', MilestoneViewSet)
 #router.register(r'thought', ThoughtViewset)
 router.register(r'sharing', SharingViewSet)
+router.register(r'blog', BlogViewSet)
+
 router.register(r'fileupload', FileuploadViewSet)
 #router.register(r'gallery/images', GalleryViewSet)
 
