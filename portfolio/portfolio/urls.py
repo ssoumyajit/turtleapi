@@ -33,8 +33,14 @@ from django.core.files import File
 
 import sys
 import time
+import os  #during PIL operations
 
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
+from django.db.models import TextField
+
+#global variables----------------------------
+photo='portfolio/photo_comment.png'
+
 
 #-----------Utility Functions----------------#
 #write a function which will hash (not exactly hashing but kind of generate a random string) the file names of the images instead of showing the actual names...security 
@@ -43,12 +49,22 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 
 
 #utility function for image resizing and compression
+
 def resize_compress(image):
     img = Image.open(image)
     img_io = BytesIO()  #one instance of BytesIO class
     img.save(img_io, "JPEG", quality = 60)
     new_img = File(img_io, name = image.name)
     return new_img
+
+class NonStrippingTextField(TextField):
+    """A TextField that does not strip whitespace at the beginning/end of
+    it's value.  Might be important for markup/code."""
+
+    def formfield(self, **kwargs):
+        kwargs['strip'] = False
+        return super(NonStrippingTextField, self).formfield(**kwargs)
+
 #-----------Utility Functions----------------#
 
 
@@ -93,13 +109,15 @@ class Portfolio(models.Model):
     artist_name = models.CharField(max_length = 20)
     #country = CountryField(blank_label='(select country)')
     #country = CountryField(country_dict=True)
+    username = models.CharField(max_length = 20, unique=True)
     country = CountryField()
     style = models.CharField(max_length = 15, default = "")
     artist_image = models.FileField(default="", upload_to = scramble_uploaded_filename) 
                                        #we don't want to call the scramle__ function {no bracket()}, we just need to reference it
                                        #so that every time an image is uploaded, django image field will itself call it.
     bio = models.CharField(max_length = 100, default="")
-    biography = models.TextField(default= "")
+    introduction = models.TextField(default= "")
+    
     #seems like  required=True by default
     #https://pydigger.com/pypi/django-countries
     #https://stackoverflow.com/questions/36080198/django-countries-and-tastypie-get-country-name
@@ -262,8 +280,6 @@ class Sharing(models.Model):
         extension = filename.split(".")[-1]
         #return "{},{}".format(stringified_file_name, extension)
         return "{}+{}.{}".format(folder, uuid.uuid4(), extension)
-    
-
 
     s_photo = models.ImageField(default="", upload_to = "sharing/")
     s_student = models.ManyToManyField('Portfolio', related_name = "mystudent")
@@ -273,15 +289,39 @@ class Sharing(models.Model):
     s_date = models.DateField()
     s_country = CountryField()
     s_location = models.CharField(max_length = 30)
-    s_photo_comment = models.ImageField(default = "photo_comment.png", upload_to = "sharing/")
+    s_photo_comment = models.ImageField(default = "", upload_to = "sharing/")
 
+        
+    
     class Meta:
         ordering = ['s_date']
+    
+    '''
+    def save(self, *args, **kwargs):
+        #super(Sharing, self).save(*args, **kwargs)        
+        size = (50,50)
+        #file, ext = os.path.splitext(photo)
+        k = Image.open(photo) #returns an image object.
+        k.resize(size)   #do some operations on image object.
+        img_io = BytesIO()
+        new_img = File(img_io, name = photo.name)
+        self.s_photo_comment = new_img
+        #self.s_photo_comment = k.save(img_io + '.resized', "PNG")  #(file, "PNG")here file is a/b/c/name
+        super().save(*args, **kwargs)
+
+
+
+        img = Image.open(image)
+        img_io = BytesIO()  #one instance of BytesIO class
+        img.save(img_io, "JPEG", quality = 60)
+        new_img = File(img_io, name = image.name)
+        return new_img
+'''
     
 
 class Blog(models.Model):
     b_user = models.ForeignKey('Portfolio', on_delete=models.CASCADE, related_name="blog")
-    b_title = models.CharField(max_length = 255, default = "")
+    b_title = models.CharField(max_length = 255, default = "" )
     b_date = models.DateField()
     b_content = models.TextField(default = "")
     b_photo = models.ImageField(default = "", upload_to = "blog/")
@@ -289,7 +329,11 @@ class Blog(models.Model):
     class Meta:
         ordering = ['b_date']
 
-
+class Biography(models.Model):
+    bi_user = models.OneToOneField('Portfolio', on_delete = models.CASCADE, primary_key = True)
+    bi_content = NonStrippingTextField()
+    bi_photo1 = models.ImageField(default = "", upload_to = 'biography/')
+    #eventually will put more photos, videos, links etc.
 
 
 class Fileupload(models.Model):
@@ -349,6 +393,12 @@ class BlogSerializers(serializers.ModelSerializer):
         model = Blog
         fields = "__all__"
 
+class BiographySerializers(serializers.ModelSerializer):
+    #bi_content = serializers.TextField(trim_whitespace=False)
+    class Meta:
+        model = Biography
+        fields = "__all__"
+        #extra_kwargs = {"bi_content": {"trim_whitespace": False}}
 
 #class PortfolioSerializers(serializers.HyperlinkedModelSerializer):
 class PortfolioSerializers(serializers.ModelSerializer):
@@ -356,22 +406,25 @@ class PortfolioSerializers(serializers.ModelSerializer):
     judge = JudgingSerializers(many = True, read_only = True)
     gallery = GallerySerializers(many = True, read_only = True)
     milestone = MilestoneSerializers(many = True, read_only = True)
+    biography = BiographySerializers(read_only = True)
     #thought = ThoughtSerializers(many = True, read_only = True)
-    myteacher = SharingSerializers(many = True, read_only = True)
-    mystudent = SharingSerializers(many = True, read_only = True)
+    myteacher = SharingSerializers(many = True, read_only = True) #source = "portfolio_set"
+    mystudent = SharingSerializers(many = True, read_only = True) #source = "portfolio_set"
     #read_only : it is for get and retrieve actions, only reading, no writing.
     class Meta:
         model = Portfolio
-        fields = ("id", "artist_name","country", "style" ,"artist_image", "bio","biography", \
+        fields = ("id", "artist_name", "username" ,"country", "style" ,"artist_image", "bio","introduction","biography", \
             "gallery","workshop", "judge", "milestone", "myteacher", "mystudent", )
-        depth = 1
+        depth = 2
 
 
 #------------------------------------------------------------------------------
 class PortfolioViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser,)
-    queryset = Portfolio.objects.all()
+    
     serializer_class = PortfolioSerializers
+    lookup_field = "username"
+    queryset = Portfolio.objects.all()
 
 class WorkshopViewSet(viewsets.ModelViewSet):
     queryset =  Workshop.objects.all()
@@ -401,6 +454,10 @@ class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
     serializer_class = BlogSerializers
 
+class BiographyViewSet(viewsets.ModelViewSet):
+    queryset = Biography.objects.all()
+    serializer_class = BiographySerializers
+
 class FileuploadViewSet(viewsets.ModelViewSet):
     #parser_classes = (MultiPartParser, FormParser)
     queryset = Fileupload.objects.all()
@@ -416,9 +473,10 @@ router.register(r'milestone', MilestoneViewSet)
 #router.register(r'thought', ThoughtViewset)
 router.register(r'sharing', SharingViewSet)
 router.register(r'blog', BlogViewSet)
+router.register(r'biography', BiographyViewSet)
 
 router.register(r'fileupload', FileuploadViewSet)
-#router.register(r'gallery/images', GalleryViewSet)
+#router.register(r'portfoliomini', PortfolioMiniViewSet)
 
 #wire up the API using automatic URL routing
 urlpatterns = [
