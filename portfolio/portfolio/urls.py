@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import serializers, viewsets, routers
 from django.db import models
+from rest_framework import generics  #for gallery filtering.
 from django_countries.fields import CountryField
 #from django_countries.serializer_fields import CountryField #don't keep both CountryField
 #from django_countries.serializers import CountryFieldMixin
@@ -37,6 +38,7 @@ import os  #during PIL operations
 
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from django.db.models import TextField
+from rest_framework import filters
 
 #global variables----------------------------
 photo='portfolio/photo_comment.png'
@@ -335,7 +337,6 @@ class Biography(models.Model):
     bi_photo1 = models.ImageField(default = "", upload_to = 'biography/')
     #eventually will put more photos, videos, links etc.
 
-
 class Fileupload(models.Model):
     file = models.ImageField(default = "", upload_to = "uploads/")
     text = models.CharField(default = "", max_length = 255)
@@ -358,6 +359,9 @@ class GallerySerializers(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = "__all__"
+        #depth = 1 #when you keep this depth option, it implies read only..so u won't be able
+        #to get all the fields while upaloding via browsabel api.
+
         #fields = ['pk','g_artist', 'g_upload_photo', 'g_resized_photo_path']
         #read_only= ['g_resized_photo_path']
         # extra_kwargs = {
@@ -382,6 +386,7 @@ class SharingSerializers(serializers.ModelSerializer):
         model = Sharing
         #exclude = ['s_photo_comment']
         fields = "__all__"
+        depth=1
 
 class FileuploadSerializers(serializers.ModelSerializer):
     class Meta:
@@ -402,6 +407,7 @@ class BiographySerializers(serializers.ModelSerializer):
 
 #class PortfolioSerializers(serializers.HyperlinkedModelSerializer):
 class PortfolioSerializers(serializers.ModelSerializer):
+    '''
     workshop = WorkshopSerializers(many = True, read_only = True)
     judge = JudgingSerializers(many = True, read_only = True)
     gallery = GallerySerializers(many = True, read_only = True)
@@ -411,11 +417,13 @@ class PortfolioSerializers(serializers.ModelSerializer):
     myteacher = SharingSerializers(many = True, read_only = True) #source = "portfolio_set"
     mystudent = SharingSerializers(many = True, read_only = True) #source = "portfolio_set"
     #read_only : it is for get and retrieve actions, only reading, no writing.
+    '''
     class Meta:
         model = Portfolio
-        fields = ("id", "artist_name", "username" ,"country", "style" ,"artist_image", "bio","introduction","biography", \
-            "gallery","workshop", "judge", "milestone", "myteacher", "mystudent", )
-        depth = 2
+        fields = "__all__"
+        #fields = ("id", "artist_name", "username" ,"country", "style" ,"artist_image", "bio","introduction","biography", \
+        #    "gallery","workshop", "judge", "milestone", "myteacher", "mystudent", )
+        #depth = 2
 
 
 #------------------------------------------------------------------------------
@@ -425,6 +433,8 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     serializer_class = PortfolioSerializers
     lookup_field = "username"
     queryset = Portfolio.objects.all()
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username']
 
 class WorkshopViewSet(viewsets.ModelViewSet):
     queryset =  Workshop.objects.all()
@@ -433,11 +443,55 @@ class WorkshopViewSet(viewsets.ModelViewSet):
 class JudgingViewSet(viewsets.ModelViewSet):
     queryset = Judging.objects.all()
     serializer_class = JudgingSerializers
-    
+         
 class GalleryViewSet(viewsets.ModelViewSet):
+    #lookup_field = "g_artist"
+    #def get_queryset(self):
+        #return Gallery.objects.filter()
     queryset = Gallery.objects.all()
     serializer_class = GallerySerializers
-   
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['g_artist__username']
+
+'''
+#filtering against query_set
+# http://example.com/api/purchases?username=denvercoder9
+class GalleryListView(generics.ListAPIView):
+    serializer_class = GallerySerializers
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Gallery.objects.all()
+        username = self.request_params.get('username', None)
+        if username is not None:
+            queryset = queryset.filter(g_artist__username=username)
+        return queryset
+'''
+
+
+#filtering against url...looks clean
+#https://docs.djangoproject.com/en/2.2/topics/db/queries/#lookups-that-span-relationships
+
+'''
+class GalleryListView(generics.ListAPIView):
+    serializer_class = GallerySerializers
+    #filter_fields = ('username',)  #the string that u r using to search in url.
+    filter_fields = ('g_artist',)
+
+    def get_queryset(self):
+        """
+        This view should return a list of all gallery photos,
+        for the artist as determined by the artist name.
+        """
+        username = self.kwargs['username']
+        return Gallery.objects.filter(portfolio__username = username)
+'''
+
+
+
 class MilestoneViewSet(viewsets.ModelViewSet):
     queryset = Milestone.objects.all()
     serializer_class = MilestoneSerializers
@@ -448,7 +502,9 @@ class ThoughtViewset(viewsets.ModelViewSet):
 
 class SharingViewSet(viewsets.ModelViewSet):
     queryset = Sharing.objects.all()
-    serializer_class = SharingSerializers   
+    serializer_class = SharingSerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['s_teacher__username', 's_student__username']
 
 class BlogViewSet(viewsets.ModelViewSet):
     queryset = Blog.objects.all()
@@ -475,6 +531,7 @@ router.register(r'sharing', SharingViewSet)
 router.register(r'blog', BlogViewSet)
 router.register(r'biography', BiographyViewSet)
 
+
 router.register(r'fileupload', FileuploadViewSet)
 #router.register(r'portfoliomini', PortfolioMiniViewSet)
 
@@ -482,7 +539,12 @@ router.register(r'fileupload', FileuploadViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    path('api/v1/user/', include('user.urls'))
+    #path('api/v1/gallery/', GalleryViewSet.as_view({'get': 'list'}), name = 'gallery' ),
+    #Spath('api/v1/gallery/(?P<username>\s+)/$', GalleryListView.as_view(), name='user_gallery'),
+    #path('api/v1/gallery/<str:username>/', GalleryListView.as_view()),
+    path('api/v1/user/', include('user.urls')),
+    path('api/v1/filter/', include('filter.urls'))
+
 ]
 
 #configure before production
