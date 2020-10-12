@@ -40,6 +40,9 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from django.db.models import TextField
 from rest_framework import filters
 
+#validators
+from rest_framework.validators import UniqueValidator
+
 #global variables----------------------------
 photo='portfolio/photo_comment.png'
 
@@ -111,7 +114,7 @@ class Portfolio(models.Model):
     artist_name = models.CharField(max_length = 20)
     #country = CountryField(blank_label='(select country)')
     #country = CountryField(country_dict=True)
-    username = models.CharField(max_length = 20, unique=True)
+    username = models.CharField(max_length = 20, unique=True) #validators=[UniqueValidator(queryset=Portfolio.objects.all())] #under the hood
     country = CountryField()
     style = models.CharField(max_length = 15, default = "")
     artist_image = models.FileField(default="", upload_to = scramble_uploaded_filename) 
@@ -356,9 +359,31 @@ class JudgingSerializers(serializers.ModelSerializer):
         #depth = 1
 
 class GallerySerializers(serializers.ModelSerializer):
+
+    '''
+    def create(self, validated_data):
+
+        #if Gallery.objects.filter(validated_data.g_artist).count()>=4:        
+        #'dict' object has no attribute 'g_artist'
+        
+        if Gallery.objects.filter(validated_data.pop('g_artist')).count()>=4:
+        #'Portfolio' object is not iterable
+            
+        raise serializers.ValidationError('only 4 photos can be upladed in gallery')
+    '''
+    def validate(self, data):
+        if Gallery.objects.filter(id = data.g_artist).count()>=4:
+            raise serializers.ValidationError('only 4 photos can be upladed in gallery')
+        return data
+
     class Meta:
         model = Gallery
         fields = "__all__"
+
+        #extra_kwargs = {
+        #    'url':{'lookup_field':'g_upload_photo'}
+        #}
+
         #depth = 1 #when you keep this depth option, it implies read only..so u won't be able
         #to get all the fields while upaloding via browsabel api.
 
@@ -419,6 +444,15 @@ class PortfolioSerializers(serializers.ModelSerializer):
     #read_only : it is for get and retrieve actions, only reading, no writing.
     '''
     class Meta:
+        '''
+        validators = [
+            UniqueValidator(
+                queryset=Portfolio.objects.all(),
+                fields = 'username',
+            )
+        ]
+        '''
+
         model = Portfolio
         fields = "__all__"
         #fields = ("id", "artist_name", "username" ,"country", "style" ,"artist_image", "bio","introduction","biography", \
