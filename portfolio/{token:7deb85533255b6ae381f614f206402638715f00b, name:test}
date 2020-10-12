@@ -1,0 +1,10 @@
+HTTP/1.1 401 Unauthorized
+Date: Sat, 10 Oct 2020 17:40:31 GMT
+Server: WSGIServer/0.2 CPython/3.7.3
+Content-Type: application/json
+WWW-Authenticate: Token
+Vary: Accept, Origin
+Allow: GET, PUT, PATCH, HEAD, OPTIONS
+X-Frame-Options: SAMEORIGIN
+Content-Length: 58
+
