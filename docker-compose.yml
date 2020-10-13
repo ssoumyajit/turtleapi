@@ -3,8 +3,8 @@ version: '3'
 services:
   webserver:
     build: .
-    volumes:
-      - ./portfolio:/portfolio    
+   # volumes:
+    #  - ./portfolio:/portfolio    
     ports:
       - "8000:8000"
     #command: >
