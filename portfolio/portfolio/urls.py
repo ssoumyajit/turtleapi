@@ -411,7 +411,7 @@ class SharingSerializers(serializers.ModelSerializer):
         model = Sharing
         #exclude = ['s_photo_comment']
         fields = "__all__"
-        depth=1
+#        depth=1
 
 class FileuploadSerializers(serializers.ModelSerializer):
     class Meta:
