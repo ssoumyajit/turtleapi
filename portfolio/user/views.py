@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateAPIView
 from .serializers import UserSerializer, AuthTokenSerializer
 
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -19,7 +19,7 @@ class CreateTokenView(ObtainAuthToken):
     serializer_class = AuthTokenSerializer
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
-class ManageUserView(generics.RetrieveUpdateAPIView):
+class ManageUserView(RetrieveUpdateAPIView):
     """
     manage the authenticated user.
     """

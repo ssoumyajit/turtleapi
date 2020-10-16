@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'portfolio',
     'user',
     'corsheaders',
-    'filter'
+    'filter',
+    'artist'
 ]
 
 MIDDLEWARE = [

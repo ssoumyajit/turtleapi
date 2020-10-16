@@ -543,7 +543,9 @@ urlpatterns = [
     #Spath('api/v1/gallery/(?P<username>\s+)/$', GalleryListView.as_view(), name='user_gallery'),
     #path('api/v1/gallery/<str:username>/', GalleryListView.as_view()),
     path('api/v1/user/', include('user.urls')),
-    path('api/v1/filter/', include('filter.urls'))
+    path('api/v1/filter/', include('filter.urls')),
+    path('api/v1/artist/', include('artist.urls')),
+    
 
 ]
 
