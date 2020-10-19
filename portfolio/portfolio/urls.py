@@ -367,7 +367,7 @@ class GallerySerializers(serializers.ModelSerializer):
         # extra_kwargs = {
             #'g_resized_photo_path': {'write_only': True}
         #}
-        #depth = 1
+        depth = 1
 
 
 class MilestoneSerializers(serializers.ModelSerializer):

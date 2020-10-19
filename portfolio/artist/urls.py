@@ -5,13 +5,13 @@ from .views import CreateArtistView, ArtistView
 from artist import views
 
 router = DefaultRouter()
-router.register('artist', CreateArtistView, base_name='ArtistCreate')
-router.register('xyz', ArtistView)
+router.register('create', CreateArtistView, base_name='ArtistCreate')
+router.register('list', ArtistView)
 
 app_name = 'artist'
 
 urlpatterns = [
-    path("", include(router.urls)),
-    path(r'create/artist/', CreateArtistView.as_view(), name = 'create_artist'),
+    path(r'', include(router.urls)),
+    #path(r'create/', CreateArtistView.as_view({'get': 'list'}), name = 'create_artist'),
     
 ]
