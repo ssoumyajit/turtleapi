@@ -5,10 +5,10 @@ class ArtistSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    username = UserSerializer(many = True,read_only = True)
+    username = UserSerializer()
     class Meta:
         model = Artist
-        fields = ['id','artist_name', 'username']
+        fields = ["artist_name","username"]
         
         '''
         #depth = 1

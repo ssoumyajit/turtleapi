@@ -14,8 +14,8 @@ class CreateArtistView(mixins.CreateModelMixin,viewsets.GenericViewSet):
     create a new Artist Portfolio.
     """
     serializer_class = ArtistSerializers
-    #authentication_classes = (TokenAuthentication,)
-    #permission_classes = (IsAuthenticated,)
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
     
     #from CDRF.co, for later.
     '''
