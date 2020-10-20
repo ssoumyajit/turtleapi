@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Artist
 from rest_framework import viewsets
-from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers
+from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GalleryReadOnlySerializers, GallerySerializers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import mixins
@@ -75,3 +75,19 @@ class ArtistView(viewsets.ReadOnlyModelViewSet):
     def get_queryset(self):
         pass
     '''
+
+class GalleryView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = GalleryReadOnlySerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['g_artist__name']
+    queryset = Artist.objects.all()
+
+
+class CreateGalleryView(mixins.CreateModelMixin,viewsets.GenericViewSet):
+    """
+    create a new Artist Portfolio.
+    """
+    serializer_class = GallerySerializers
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
