@@ -11,8 +11,8 @@ router.register('create', CreateArtistView, base_name='ArtistCreate')
 router.register('list', ArtistView)
 
 #gallery
-router.register('gallery/create', CreateArtistView, base_name='ArtistCreate')
-router.register('gallery/list', ArtistView)
+router.register('gallery/create', CreateArtistView, base_name='GalleryCreate')
+router.register('gallery/list', GalleryView)
 
 
 app_name = 'artist'

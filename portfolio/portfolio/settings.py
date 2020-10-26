@@ -48,7 +48,8 @@ INSTALLED_APPS = [
     'user',
     'corsheaders',
     'filter',
-    'artist'
+    'artist',
+    
 ]
 
 MIDDLEWARE = [

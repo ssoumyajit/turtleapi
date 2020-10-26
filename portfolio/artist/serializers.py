@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from artist.models import Artist
+from artist.models import Artist, Gallery
 from user.serializers import UserSerializer
 class ArtistSerializers(serializers.ModelSerializer):
     '''
@@ -8,7 +8,8 @@ class ArtistSerializers(serializers.ModelSerializer):
     #username = UserSerializer()
     class Meta:
         model = Artist
-        fields = ["artist_name", ]
+        fields = "__all__"
+        #depth = 1
         
         '''
         #depth = 1
@@ -35,7 +36,7 @@ class GallerySerializers(serializers.ModelSerializer):
     '''
     g_artist = UserSerializer()
     class Meta:
-        model = Artist
+        model = Gallery
         fields = ["g_upload-data", "g_datetime", "g_artist"]
 
         
@@ -45,5 +46,5 @@ class GalleryReadOnlySerializers(serializers.ModelSerializer):
     '''
     g_artist = serializers.SlugRelatedField(read_only=True,slug_field='name')  #this field by default read-write, u can make it read only by specifying true.
     class Meta:
-        model = Artist
-        fields = ["id", "g_upload_photo", "g_datetime" "g_artist"]
+        model = Gallery
+        fields = ["id", "g_upload_photo", "g_datetime", "g_artist"]

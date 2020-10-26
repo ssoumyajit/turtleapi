@@ -1,9 +1,10 @@
 from django.db import models
 from django.conf import settings
+from user.models import User
 
 class Artist(models.Model):
     artist_name = models.CharField(max_length=255)
-    username = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    username = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="artist" )
 
     def __str__(self):
         return self.artist_name
