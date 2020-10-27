@@ -1,5 +1,4 @@
 from django.shortcuts import render
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from .models import Artist
 from rest_framework import viewsets
 from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GalleryReadOnlySerializers, GallerySerializers
@@ -7,6 +6,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import mixins
 from rest_framework import filters
+#from rest_framework.generics import CreateAPIView
 
 #A viewset needs to inherit from viewsets.ViewSet.
 class CreateArtistView(mixins.CreateModelMixin,viewsets.GenericViewSet):
@@ -29,6 +29,23 @@ class CreateArtistView(mixins.CreateModelMixin,viewsets.GenericViewSet):
     def perform_create(self, serializer):
         serializer.save()
     '''
+
+
+class UpdateArtistView(mixins.UpdateModelMixin, viewsets.GenericViewSet):
+    """
+    view to retrieve, update artist object.
+    #RetrieveUpdateDestroyAPIView: we don't use it coz it is not inherited from viewsets rather views class.... be careful
+    """
+    serializer_class = ArtistSerializers
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    #def get_queryset(self):
+        #return self.request.user.get(pk)
+
+    #def get_object(self):
+        #return self.request.user
+
 
 
 class ArtistView(viewsets.ReadOnlyModelViewSet):

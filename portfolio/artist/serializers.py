@@ -5,12 +5,10 @@ class ArtistSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    #username = UserSerializer()
     class Meta:
         model = Artist
         fields = "__all__"
-        #depth = 1
-        
+          
         '''
         #depth = 1
         #the problem here is, the hashed password is also being shown.... lol
