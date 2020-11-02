@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from artist.models import Artist, Gallery
+from artist.models import Artist, Gallery, Work
 from user.serializers import UserSerializer
 class ArtistSerializers(serializers.ModelSerializer):
     '''
@@ -46,3 +46,12 @@ class GalleryReadOnlySerializers(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ["id", "g_upload_photo", "g_datetime", "g_artist"]
+
+class WorkSerializers(serializers.ModelSerializer):
+    '''
+    serializer for work class
+    '''
+
+    class Meta:
+        model = Work
+        fields = "__all__"

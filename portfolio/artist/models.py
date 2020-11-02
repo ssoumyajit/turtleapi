@@ -24,3 +24,10 @@ class Gallery(models.Model):
     
     class Meta:
         ordering = ['-g_datetime']
+
+class Work(models.Model):
+    wuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    wcontext = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.wcontext

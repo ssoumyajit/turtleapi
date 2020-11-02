@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from .models import Artist
+from .models import Artist, Work
 from rest_framework import viewsets
-from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GalleryReadOnlySerializers, GallerySerializers
+from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GalleryReadOnlySerializers, GallerySerializers, WorkSerializers
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import mixins
 from rest_framework import filters
 #from rest_framework.generics import CreateAPIView
@@ -108,3 +108,11 @@ class CreateGalleryView(mixins.CreateModelMixin,viewsets.GenericViewSet):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
 
+class WorkViewSets(viewsets.ModelViewSet):
+    queryset = Work.objects.all()
+    serializer_class = WorkSerializers 
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['wuser__username']
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)

@@ -40,6 +40,9 @@ from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from django.db.models import TextField
 from rest_framework import filters
 
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+
 #global variables----------------------------
 photo='portfolio/photo_comment.png'
 
@@ -428,13 +431,15 @@ class PortfolioSerializers(serializers.ModelSerializer):
 
 #------------------------------------------------------------------------------
 class PortfolioViewSet(viewsets.ModelViewSet):
-    parser_classes = (MultiPartParser,)
-    
+    parser_classes = (MultiPartParser,)   
     serializer_class = PortfolioSerializers
     lookup_field = "username"
     queryset = Portfolio.objects.all()
     filter_backends = [filters.SearchFilter]
     search_fields = ['username']
+
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class WorkshopViewSet(viewsets.ModelViewSet):
     queryset =  Workshop.objects.all()

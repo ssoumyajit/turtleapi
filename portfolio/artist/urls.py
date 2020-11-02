@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CreateArtistView, UpdateArtistView, ArtistView, CreateGalleryView, GalleryView
+from .views import CreateArtistView, UpdateArtistView, ArtistView, CreateGalleryView, GalleryView, WorkViewSets
 
 from artist import views
 
@@ -14,6 +14,9 @@ router.register('update', UpdateArtistView, base_name='ArtistUpdate')
 #gallery
 router.register('gallery/create', CreateArtistView, base_name='GalleryCreate')
 router.register('gallery/list', GalleryView)
+
+#work
+router.register('work', WorkViewSets)
 
 
 

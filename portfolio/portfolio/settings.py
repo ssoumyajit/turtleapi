@@ -67,6 +67,7 @@ ROOT_URLCONF = 'portfolio.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        #'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         #register the session auth so that, u can see the person who is loggedin in browsable API
         #that person's session is running. u can access admin if that credential is of an admin.
