@@ -551,6 +551,7 @@ urlpatterns = [
     path('api/v1/filter/', include('filter.urls')),
     path('api/v1/artist/', include('artist.urls')),
     
+    
 
 ]
 

@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'filter',
     'artist',
     
+    
 ]
 
 MIDDLEWARE = [
