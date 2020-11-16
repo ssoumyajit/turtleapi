@@ -3,6 +3,7 @@ from rest_framework.serializers import ModelSerializer
 from .models import User
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserSerializer(ModelSerializer):
     """ serializer for users object"""
@@ -66,4 +67,14 @@ class AuthTokenSerializer(serializers.Serializer):
         return attrs
         #you always return the object at the end of the validation.
 
-
+class CustomTokenSerializer(TokenObtainPairSerializer):
+    """
+    Provides user details along with tokens
+    """
+    def validate(self, attrs):
+        #default result (access/refresh tokens)
+        data = super(CustomTokenSerializer, self).validate(attrs)
+        #custom data you want to include
+        data.update({'user': self.user.name})
+        data.update({'id': self.user.id})
+        return data

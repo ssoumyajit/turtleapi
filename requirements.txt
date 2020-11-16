@@ -8,6 +8,7 @@ django-countries==6.1.2
 django-filter==2.3.0
 djangorestframework==3.10.3
 djangorestframework-jwt==1.11.0
+djangorestframework-simplejwt==4.4.0
 idna==2.10
 imageio==2.9.0
 imageio-ffmpeg==0.4.2
