@@ -7,7 +7,7 @@ from artist import views
 router = DefaultRouter()
 
 #artist
-router.register('', ArtistViewSets, base_name='Artist')
+router.register('portfolio', ArtistViewSets, base_name='Artist')
 '''
 router.register('create', CreateArtistView, base_name='ArtistCreate')
 router.register('list', ArtistView)

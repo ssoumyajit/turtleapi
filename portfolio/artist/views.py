@@ -121,8 +121,8 @@ class WorkViewSets(viewsets.ModelViewSet):
 class ArtistViewSets(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializers
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['username__name']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['username__name']
 
-    authentication_classes = (TokenAuthentication,)
+    #authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
