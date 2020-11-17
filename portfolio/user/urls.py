@@ -13,3 +13,4 @@ urlpatterns = [
     path('update/', ManageUserView.as_view(), name='update'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
 ]
+

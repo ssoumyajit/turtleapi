@@ -75,6 +75,6 @@ class CustomTokenSerializer(TokenObtainPairSerializer):
         #default result (access/refresh tokens)
         data = super(CustomTokenSerializer, self).validate(attrs)
         #custom data you want to include
-        data.update({'user': self.user.name})
+        data.update({'username': self.user.name})
         data.update({'id': self.user.id})
         return data
