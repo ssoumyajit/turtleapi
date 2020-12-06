@@ -2,6 +2,9 @@ from django.db import models
 from django.conf import settings
 from user.models import User
 from django_countries.fields import CountryField
+import time
+import datetime
+import uuid
 
 class Artist(models.Model):
     artist_name = models.CharField(max_length=255)

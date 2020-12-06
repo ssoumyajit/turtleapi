@@ -35,10 +35,11 @@ class GallerySerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    g_artist = UserSerializer()
+    #g_artist = UserSerializer()
     class Meta:
         model = Gallery
-        fields = ["g_upload-data", "g_datetime", "g_artist"]
+        fields='__all__'
+        #fields = ["g_upload-data", "g_datetime", "g_artist"]
 
         
 class GalleryReadOnlySerializers(serializers.ModelSerializer):
