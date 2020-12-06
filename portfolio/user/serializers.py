@@ -34,6 +34,20 @@ class UserSerializer(ModelSerializer):
         return user
         
 
+
+class CustomTokenSerializer(TokenObtainPairSerializer):
+    """
+    Provides user details along with tokens
+    """
+    def validate(self, attrs):
+        #default result (access/refresh tokens)
+        data = super(CustomTokenSerializer, self).validate(attrs)
+        #custom data you want to include
+        data.update({'username': self.user.name})
+        data.update({'id': self.user.id})
+        return data
+
+'''
 class AuthTokenSerializer(serializers.Serializer):
     """
     serializer for user authentication object.
@@ -66,15 +80,4 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs['user'] = user
         return attrs
         #you always return the object at the end of the validation.
-
-class CustomTokenSerializer(TokenObtainPairSerializer):
-    """
-    Provides user details along with tokens
-    """
-    def validate(self, attrs):
-        #default result (access/refresh tokens)
-        data = super(CustomTokenSerializer, self).validate(attrs)
-        #custom data you want to include
-        data.update({'username': self.user.name})
-        data.update({'id': self.user.id})
-        return data
+'''

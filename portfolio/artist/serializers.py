@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from artist.models import Artist, Gallery, Work
 from user.serializers import UserSerializer
+
 class ArtistSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.

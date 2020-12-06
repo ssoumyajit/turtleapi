@@ -1,13 +1,13 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import CreateArtistView, UpdateArtistView, ArtistView, CreateGalleryView, GalleryView, WorkViewSets, ArtistViewSets
-
+#from .views import CreateArtistView, UpdateArtistView, ArtistView, CreateGalleryView, GalleryView, WorkViewSets, ArtistViewSets
+from .views import ArtistViewSets
 from artist import views
 
 router = DefaultRouter()
 
 #artist
-router.register('portfolio', ArtistViewSets, base_name='Artist')
+router.register('portfolio', ArtistViewSets)
 '''
 router.register('create', CreateArtistView, base_name='ArtistCreate')
 router.register('list', ArtistView)

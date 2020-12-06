@@ -1,11 +1,17 @@
 from django.db import models
 from django.conf import settings
 from user.models import User
+from django_countries.fields import CountryField
 
 class Artist(models.Model):
     artist_name = models.CharField(max_length=255)
     username = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="artist" )
-
+    artist_image = models.ImageField(default="", upload_to = "covers/")
+    country = CountryField()
+    style = models.CharField(max_length = 15, default = "")
+    quote = models.CharField(max_length = 255, default="")
+    introduction = models.TextField(default= "")
+    
     def __str__(self):
         return self.artist_name
 
