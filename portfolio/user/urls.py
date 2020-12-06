@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework import generics
-from .views import CreateUserView, CreateTokenView, ManageUserView, CustomObtainAuthToken
+from .views import CreateUserView, ManageUserView, CustomObtainAuthToken
 from rest_framework_simplejwt import views as jwt_views
 
 app_name = 'user'
