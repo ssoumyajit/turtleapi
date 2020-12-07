@@ -6,11 +6,11 @@ class ArtistSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    #username = serializers.SlugRelatedField(read_only=True,slug_field='name')
+    username = serializers.SlugRelatedField(read_only=True,slug_field='name')
     class Meta:
         model = Artist
-        fields = "__all__"
-        #fields = ["id", "artist_name", "username"]
+        #fields = "__all__"
+        fields = ["id", "artist_name", "username", "country", "artist_image", "style", "introduction", "quote"]
           
         '''
         #depth = 1

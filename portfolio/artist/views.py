@@ -11,6 +11,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class ArtistViewSets(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializers
+    lookup_field = "username__name"
     filter_backends = [filters.SearchFilter]
     search_fields = ['username__name']
 
@@ -24,5 +25,14 @@ class GalleryViewSets(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['g_artist__name']
     
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+class WorkViewSets(viewsets.ModelViewSet):
+    queryset = Work.objects.all()
+    serializer_class = WorkSerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['w_artist__name']
+
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
