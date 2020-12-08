@@ -1,16 +1,18 @@
 from rest_framework import serializers
 from artist.models import Artist, Gallery, Work
 from user.serializers import UserSerializer
+from user.models import User
 
 class ArtistSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    username = serializers.SlugRelatedField(read_only=True,slug_field='name')
+    username = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
+    #read_only=True,
     class Meta:
         model = Artist
         #fields = "__all__"
-        fields = ["id", "artist_name", "username", "country", "artist_image", "style", "introduction", "quote"]
+        fields = ["id", "artist_name", "country", "artist_image", "style", "introduction", "quote", "username"]
           
         '''
         #depth = 1
@@ -21,6 +23,28 @@ class ArtistSerializers(serializers.ModelSerializer):
         #https://stackoverflow.com/questions/49097981/django-rest-framework-limiting-fields-on-foreignkey-relationship-when-serialize
         '''
 
+#------
+#g_artist = UserSerializer()
+#------
+
+class GallerySerializers(serializers.ModelSerializer):
+    '''
+    dedicated artist serializer for Artist creation.
+    '''
+    class Meta:
+        model = Gallery
+        fields='__all__'
+
+        
+class WorkSerializers(serializers.ModelSerializer):
+    '''
+    serializer for work class
+    '''
+    class Meta:
+        model = Work
+        fields = "__all__"
+
+#------------------------------------------------------------
 class ArtistReadOnlySerializers(serializers.ModelSerializer):
     '''
     serializer for readonly aspects of Artist model.
@@ -30,18 +54,6 @@ class ArtistReadOnlySerializers(serializers.ModelSerializer):
         model = Artist
         fields = ["id", "artist_name", "username"]
 
-
-class GallerySerializers(serializers.ModelSerializer):
-    '''
-    dedicated artist serializer for Artist creation.
-    '''
-    #g_artist = UserSerializer()
-    class Meta:
-        model = Gallery
-        fields='__all__'
-        #fields = ["g_upload-data", "g_datetime", "g_artist"]
-
-        
 class GalleryReadOnlySerializers(serializers.ModelSerializer):
     '''
     serializer for readonly aspects of Artist model.
@@ -50,12 +62,3 @@ class GalleryReadOnlySerializers(serializers.ModelSerializer):
     class Meta:
         model = Gallery
         fields = ["id", "g_upload_photo", "g_datetime", "g_artist"]
-
-class WorkSerializers(serializers.ModelSerializer):
-    '''
-    serializer for work class
-    '''
-
-    class Meta:
-        model = Work
-        fields = "__all__"
