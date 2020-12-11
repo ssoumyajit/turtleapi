@@ -31,18 +31,10 @@ class GallerySerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-<<<<<<< HEAD
-    #g_artist = UserSerializer()
-    class Meta:
-        model = Gallery
-        fields='__all__'
-        #fields = ["g_upload-data", "g_datetime", "g_artist"]
-=======
     g_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
         model = Gallery
         fields='__all__'
->>>>>>> turtleapi_auth
 
         
 class WorkSerializers(serializers.ModelSerializer):
