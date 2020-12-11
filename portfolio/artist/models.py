@@ -35,8 +35,12 @@ class Gallery(models.Model):
         ordering = ['-g_datetime']
 
 class Work(models.Model):
-    wuser = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    wcontext = models.CharField(max_length=255)
+    w_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    w_context = models.CharField(max_length=255)
+    w_photo = models.ImageField(default="", upload_to = "work/")
+    w_datetime = models.DateTimeField(auto_now = True)
+    w_content = models.TextField()
+
 
     def __str__(self):
         return self.wcontext
