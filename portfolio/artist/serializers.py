@@ -31,6 +31,7 @@ class GallerySerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
+    g_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
         model = Gallery
         fields='__all__'
@@ -40,6 +41,7 @@ class WorkSerializers(serializers.ModelSerializer):
     '''
     serializer for work class
     '''
+    w_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
         model = Work
         fields = "__all__"
