@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'filter',
     'artist',
-    'sharing'
+    'sharing',
+    'myhood'
     
     
 ]

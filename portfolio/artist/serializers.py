@@ -34,7 +34,7 @@ class GallerySerializers(serializers.ModelSerializer):
     g_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
         model = Gallery
-        fields='__all__'
+        fields='__all__'  #i think it should be double quotes, but docs says single quote is right.
 
         
 class WorkSerializers(serializers.ModelSerializer):
