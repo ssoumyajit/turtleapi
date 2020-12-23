@@ -14,6 +14,10 @@ class Artist(models.Model):
     style = models.CharField(max_length = 15, default = "")
     quote = models.CharField(max_length = 255, default="")
     introduction = models.TextField(default= "")
+    crew = models.CharField(max_length=255, default = "")
+    ig = models.CharField(max_length=255, default = "")
+    fb = models.CharField(max_length=255, default = "")
+    personal = models.CharField(max_length=255, default = "")
     
     def __str__(self):
         return self.artist_name

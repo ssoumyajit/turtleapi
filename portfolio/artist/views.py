@@ -13,10 +13,10 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 class ArtistViewSets(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializers
-    #lookup_field = "username__name"     #previously we were using it for update
+    lookup_field = "username__name"     #previously we were using it for update
     #but let's keep it uniform and use the "id" for update from UI. now we require ?search=username option.
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['username__name']
+    #filter_backends = [filters.SearchFilter]
+    #search_fields = ['username__name']
 
     #authentication_classes = (TokenAuthentication,)
     authentication_classes = (JWTAuthentication,)
@@ -36,7 +36,6 @@ class GalleryViewSets(viewsets.ModelViewSet):
 class WorkViewSets(viewsets.ModelViewSet):
     queryset = Work.objects.all()
     serializer_class = WorkSerializers
-    #lookup_field = "username__name"
     filter_backends = [filters.SearchFilter]
     search_fields = ['w_artist__name']
 

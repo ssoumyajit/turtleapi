@@ -12,7 +12,7 @@ class ArtistSerializers(serializers.ModelSerializer):
     class Meta:
         model = Artist
         #fields = "__all__"
-        fields = ["id", "artist_name", "country", "artist_image", "style", "introduction", "quote", "username"]
+        fields = ["id", "artist_name", "country", "artist_image", "style", "introduction", "quote", "username", "crew", "ig", "fb", "personal"]
           
         '''
         #depth = 1
