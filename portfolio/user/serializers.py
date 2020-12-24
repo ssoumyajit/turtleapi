@@ -9,6 +9,7 @@ from django_countries.serializer_fields import CountryField
 
 #https://github.com/SmileyChris/django-countries
 #https://github.com/SmileyChris/django-countries/issues/106
+#https://stackoverflow.com/questions/40669313/django-countries-in-django-rest-framework
 
 class UserSerializer(ModelSerializer):
     """ serializer for users object"""

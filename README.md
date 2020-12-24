@@ -109,6 +109,19 @@ https://gist.github.com/emilsas/0364e1e756759be6017f19cc8fdb41e8 | DjangoModelPe
 https://stackoverflow.com/questions/30274591/all-fields-in-modelserializer-django-rest-framework | python - All fields in ModelSerializer django rest framework - Stack Overflow
 https://docs.djangoproject.com/en/3.1/topics/forms/modelforms/#selecting-the-fields-to-use | Creating forms from models | Django documentation | Django
 
+#------------------
+#https://stackoverflow.com/questions/41122185/database-design-for-a-system-that-has-facebook-like-groups/41123303
+
+
+https://stackoverflow.com/questions/12293689/idea-on-creating-forum-with-django-python/12293807 | Idea on creating forum with Django/Python - Stack Overflow
+https://data-flair.training/blogs/discussion-forum-python-django/ | Create a Discussion Forum in Python Django - DataFlair
+https://www.pythonpodcast.com/misago-discussion-forum-episode-231/ | Building A Modern Discussion Forum In Python To Support Healthy Communities - The Python Podcast
+https://levelup.gitconnected.com/django-user-groups-with-django-rest-framework-f6f2bab43499 | Django User Groups with Django Rest Framework | by Scott Fraser | Level Up Coding
+https://stackoverflow.com/questions/3533948/facebook-architecture | design patterns - Facebook Architecture - Stack Overflow
+https://medium.com/@pdipesh/django-rest-framework-permissions-example-8ed9809c432d | Django Rest Framework Permissions example | by dipesh | Medium
+https://stackoverflow.com/questions/41122185/database-design-for-a-system-that-has-facebook-like-groups/41123303 | mysql - Database Design for a system that has Facebook like groups - Stack Overflow
+https://stackoverflow.com/questions/55785349/database-schema-for-individual-and-group-accountslike-facebook-users-and-pages | sql - Database Schema for Individual and Group accounts(Like Facebook Users and Pages) - Stack Overflow
+https://stackoverflow.com/questions/5042273/database-users-and-groups-model | usergroups - Database users and groups model - Stack Overflow
 
 
 
