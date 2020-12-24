@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, \
                                     PermissionsMixin
+from django_countries.fields import CountryField
 
 #a manager to create user and superuser from user models
 class UserManager(BaseUserManager):
@@ -30,6 +31,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length = 255, unique=True)
     is_active = models.BooleanField(default = True)
     is_staff = models.BooleanField(default = False)
+    #country = CountryField(default = "IN")
 
     objects = UserManager()  #cretaes a new usermanager for our object
     USERNAME_FIELD = 'email'

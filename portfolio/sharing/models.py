@@ -18,7 +18,7 @@ class Sharing(models.Model):
     s_video_talk = models.FileField(default="", upload_to = "talk/")
     s_video_dance = models.FileField(default="", upload_to = "dance/")
 
-    s_date = models.DateField()
+    s_date = models.DateField(auto_now = True)
     s_location = models.CharField(max_length = 30)
     
     voters_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "votes")
@@ -26,3 +26,11 @@ class Sharing(models.Model):
     
     class Meta:
         ordering = ['s_date']
+
+
+class Comments(models.Model):
+    shareid = models.ForeignKey('Sharing', on_delete=models.CASCADE, related_name = "comment")
+    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = "commenter")
+    comment = models.CharField(max_length = 255) #add a validation here.
+
+

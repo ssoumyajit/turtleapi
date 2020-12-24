@@ -4,10 +4,15 @@ from .models import User
 from django.utils.translation import ugettext_lazy as _
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django_countries.serializers import CountryFieldMixin
+from django_countries.serializer_fields import CountryField
+
+#https://github.com/SmileyChris/django-countries
+#https://github.com/SmileyChris/django-countries/issues/106
 
 class UserSerializer(ModelSerializer):
     """ serializer for users object"""
-
+    #country = CountryField()
     class Meta:
         model = get_user_model() #return the use model that is active in this project
         #model = User
@@ -45,6 +50,7 @@ class CustomTokenSerializer(TokenObtainPairSerializer):
         #custom data you want to include
         data.update({'username': self.user.name})
         data.update({'id': self.user.id})
+        #data.update({'country': self.user.country})
         return data
 
 '''
