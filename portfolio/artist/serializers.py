@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from artist.models import Artist, Gallery, Work
+from artist.models import Artist, Gallery, Highlights
 from user.serializers import UserSerializer
 from user.models import User
 
@@ -37,13 +37,13 @@ class GallerySerializers(serializers.ModelSerializer):
         fields='__all__'  #i think it should be double quotes, but docs says single quote is right.
 
         
-class WorkSerializers(serializers.ModelSerializer):
+class HighlightsSerializers(serializers.ModelSerializer):
     '''
     serializer for work class
     '''
     w_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
-        model = Work
+        model = Highlights
         fields = "__all__"
 
 #------------------------------------------------------------

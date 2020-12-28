@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from .models import Artist, Work, Gallery
+from .models import Artist, Highlights, Gallery
 from rest_framework import viewsets
-from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GallerySerializers, WorkSerializers
+from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GallerySerializers, HighlightsSerializers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import mixins
@@ -33,9 +33,9 @@ class GalleryViewSets(viewsets.ModelViewSet):
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-class WorkViewSets(viewsets.ModelViewSet):
-    queryset = Work.objects.all()
-    serializer_class = WorkSerializers
+class HighlightsViewSets(viewsets.ModelViewSet):
+    queryset = Highlights.objects.all()
+    serializer_class = HighlightsSerializers
     filter_backends = [filters.SearchFilter]
     search_fields = ['w_artist__name']
 

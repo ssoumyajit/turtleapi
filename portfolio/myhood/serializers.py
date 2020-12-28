@@ -7,11 +7,14 @@ class MyHoodSerializers(serializers.ModelSerializer):
     class Meta:
         model = MyHood
         fields = '__all__'
+        depth=1
 class StudentsSerializers(serializers.ModelSerializer):
     class Meta:
         model = Students
         fields = '__all__'
+        depth=1
 class PostSerializers(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = '__all__'
+        depth=1
