@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from artist.models import Artist, Gallery, Highlights
+from artist.models import Artist, Gallery, Highlights, Events, JudgingWorkshop
 from user.serializers import UserSerializer
 from user.models import User
 
@@ -46,6 +46,22 @@ class HighlightsSerializers(serializers.ModelSerializer):
         model = Highlights
         fields = "__all__"
 
+
+class JudgingWorkshopSerializers(serializers.ModelSerializer):
+    jw_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
+    class Meta:
+        model = JudgingWorkshop
+        fields = "__all__"
+
+
+class EventsSerializers(serializers.ModelSerializer):
+    ev_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
+    class Meta:
+        model = Events
+        fields = "__all__"
+
+
+        
 #------------------------------------------------------------
 class ArtistReadOnlySerializers(serializers.ModelSerializer):
     '''

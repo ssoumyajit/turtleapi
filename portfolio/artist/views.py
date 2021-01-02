@@ -1,14 +1,13 @@
 from django.shortcuts import render
-from .models import Artist, Highlights, Gallery
+from .models import Artist, Highlights, Gallery, Events, JudgingWorkshop
 from rest_framework import viewsets
-from artist.serializers import ArtistSerializers, ArtistReadOnlySerializers, GallerySerializers, HighlightsSerializers
+from artist.serializers import ArtistSerializers, GallerySerializers, HighlightsSerializers, JudgingWorkshopSerializers, EventsSerializers
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework import mixins
 from rest_framework import filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-#read & retrieve using "username", create & update using "id"
 
 class ArtistViewSets(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
@@ -41,3 +40,23 @@ class HighlightsViewSets(viewsets.ModelViewSet):
 
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class JudgingWorkshopViewSets(viewsets.ModelViewSet):
+    queryset = JudgingWorkshop.objects.all()
+    serializer_class = JudgingWorkshopSerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['jw_artist__name']
+
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+class EventsViewSets(viewsets.ModelViewSet):
+    queryset = Events.objects.all()
+    serializer_class = EventsSerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['ev_artist__name']
+
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
