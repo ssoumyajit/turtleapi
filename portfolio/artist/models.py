@@ -6,21 +6,68 @@ import time
 import datetime
 import uuid
 
+#for image manipulations
+from django.core.files.base import ContentFile
+from PIL import Image
+from io import BytesIO
+import os.path
+from portfolio.settings import COVER_THUMBNAIL_SIZE
+
+#trying with django_imagekit
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
+
 class Artist(models.Model):
-    artist_name = models.CharField(max_length=255, default= "", blank = True)
-    username = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="artist", blank = False ) #must
-    artist_image = models.ImageField(default= "", upload_to = "covers/", blank = True)
+    username = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,related_name="artist", blank = False)
+    cover = models.ImageField(default= "", upload_to = "covers/", blank = True)
+    thumb = models.ImageField(upload_to = "thumbnails/", blank = True, editable=False)
     country = CountryField(default= "", blank = True)
-    style = models.CharField(max_length = 15, default= "", blank = True)
-    quote = models.CharField(max_length = 255, default= "", blank = True)
-    introduction = models.TextField(default= "", blank = True)
-    crew = models.CharField(max_length=255, default= "", blank = True)
-    ig = models.URLField(max_length=200, default= "", blank = True)
-    fb = models.URLField(max_length=200, default= "", blank = True)
-    personal = models.URLField(max_length=200, default= "", blank = True)
+    artist_name =  models.CharField(max_length=255, default= "", blank = True)
     
-    def __str__(self):
-        return self.artist_name
+
+    def save(self, *args, **kwargs):
+        if not self.make_thumbnail():
+            raise Exception('could not create thumbnail, is the FileType valid ?')
+        super(Artist, self).save(*args, **kwargs)
+
+    def make_thumbnail(self):
+            image = Image.open(self.cover)
+            image.thumbnail(COVER_THUMBNAIL_SIZE, Image.ANTIALIAS)
+
+            thumbnail_name, thumbnail_extension = os.path.splitext(self.cover.name)
+            thumbnail_extension = thumbnail_extension.lower()
+            thumbanil_filename = thumbnail_name + "_thumb" + thumbnail_extension
+
+            if thumbnail_extension in ['.jpg', '.jpeg']:
+                FTYPE = 'JPEG'
+            elif thumbnail_extension == '.png':
+                FTYPE = 'PNG'
+            else:
+                return False
+            
+            #save the thumbnail in memory file as StringIO
+            temp_thumbnail = BytesIO()
+            image.save(temp_thumbnail, FTYPE)
+            temp_thumbnail.seek(0)
+            
+            # Load a ContetnFile into the thumbnail field so it gets saved.
+            # set save=False, otherwise it will run in an infinite loop
+            self.thumb.save(thumbanil_filename, ContentFile(temp_thumbnail.read()), save = False)
+            temp_thumbnail.close()
+
+            return True
+    
+
+
+class Bio(models.Model):
+    b_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    b_style = models.CharField(max_length = 15, default= "", blank = True)
+    b_quote = models.CharField(max_length = 255, default= "", blank = True)
+    b_introduction = models.TextField(default= "", blank = True)
+    b_crew = models.CharField(max_length=255, default= "", blank = True)
+    b_ig = models.URLField(max_length=200, default= "", blank = True)
+    b_fb = models.URLField(max_length=200, default= "", blank = True)
+    b_personal = models.URLField(max_length=200, default= "", blank = True)
 
 class Gallery(models.Model):
 

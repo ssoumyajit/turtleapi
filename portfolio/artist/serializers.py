@@ -1,18 +1,32 @@
 from rest_framework import serializers
-from artist.models import Artist, Gallery, Highlights, Events, JudgingWorkshop
+from artist.models import Bio, Artist, Gallery, Highlights, Events, JudgingWorkshop
 from user.serializers import UserSerializer
 from user.models import User
 
 class ArtistSerializers(serializers.ModelSerializer):
+
+    #overridden username here
+    username = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name') # this is where the bug is, so don can patch on batalla while updating in postman
+    class Meta:
+        model = Artist
+        fields = ['username','artist_name', 'cover', 'thumb', 'country']
+    
+    def __init__(self, *args, **kwargs):
+        
+        #don't return covers when listing artists
+        if kwargs['context']['view'].action == 'list':
+            del self.fields['cover']
+        
+        super().__init__(*args, **kwargs)
+    
+class BioSerializers(serializers.ModelSerializer):
     '''
     dedicated artist serializer for Artist creation.
     '''
-    username = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
-    #read_only=True,
+    b_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
-        model = Artist
-        #fields = "__all__"
-        fields = ["id", "artist_name", "country", "artist_image", "style", "introduction", "quote", "username", "crew", "ig", "fb", "personal"]
+        model = Bio
+        fields = "__all__"
           
         '''
         #depth = 1
