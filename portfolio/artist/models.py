@@ -96,7 +96,7 @@ class Highlights(models.Model):
     h_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #must
     h_context = models.CharField(max_length=255, default= "", blank = False) #must
     h_photo = models.ImageField(default= "", upload_to = "work/", blank = False) #must
-    h_date = models.DateField(blank = True)
+    h_date = models.DateField(null=True, blank = True)  #blank is for admin, null is for db.
     h_content = models.TextField(default= "", blank = True)
     h_link = models.URLField(max_length=200, default= "",  blank = True)
 
@@ -112,13 +112,13 @@ class Highlights(models.Model):
     
 
     def __str__(self):
-        return self.w_date
+        return self.h_date
 
 class JudgingWorkshop(models.Model):
     jw_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #must
     jw_event = models.CharField(max_length = 30,default= "", blank = False) #must
     jw_photo = models.ImageField(default= "", upload_to = "judgingworkshop/", blank = False) #must
-    jw_date = models.DateField(blank = True)
+    jw_date = models.DateField(null =True, blank = True)
     jw_content = models.TextField(default= "", blank = True)
     jw_link = models.URLField(max_length=200, default= "", blank = True)
 
@@ -135,7 +135,7 @@ class Events(models.Model):
     ev_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) #must
     ev_event = models.CharField(max_length = 20, default= "", blank = False) #must
     ev_photo = models.ImageField(default= "", upload_to = "events_attended/", blank = False) #must
-    ev_date = models.DateField(blank = True)
+    ev_date = models.DateField(null = True,blank = True)
     ev_content = models.TextField(default= "", blank = True )
     ev_link = models.URLField(max_length=200, default= "", blank = True)
 

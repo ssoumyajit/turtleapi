@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnl
 from rest_framework import filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+
 class SharingViewSets(viewsets.ModelViewSet):
     queryset = Sharing.objects.all()
     serializer_class = SharingSerializers
@@ -13,7 +14,6 @@ class SharingViewSets(viewsets.ModelViewSet):
     search_fields = ['s_teacher__name', 's_student__name']
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
 
 
 class CommentViewSets(viewsets.ModelViewSet):
