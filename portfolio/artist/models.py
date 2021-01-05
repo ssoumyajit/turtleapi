@@ -123,7 +123,7 @@ class JudgingWorkshop(models.Model):
     jw_link = models.URLField(max_length=200, default= "", blank = True)
 
     def save(self, *args, **kwargs):
-        super(Highlights, self).save(*args, **kwargs)
+        super(JudgingWorkshop, self).save(*args, **kwargs)
         photo = Image.open(self.jw_photo.path) 
         photo.thumbnail((240,180), Image.ANTIALIAS)
         photo.save(self.jw_photo.path, optimize = True, quality = 90)
@@ -140,7 +140,7 @@ class Events(models.Model):
     ev_link = models.URLField(max_length=200, default= "", blank = True)
 
     def save(self, *args, **kwargs):
-        super(Highlights, self).save(*args, **kwargs)
+        super(Events, self).save(*args, **kwargs)
         photo = Image.open(self.ev_photo.path) 
         photo.thumbnail((240,180), Image.ANTIALIAS)
         photo.save(self.ev_photo.path, optimize = True, quality = 90)
