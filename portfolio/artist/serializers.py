@@ -55,7 +55,7 @@ class HighlightsSerializers(serializers.ModelSerializer):
     '''
     serializer for work class
     '''
-    w_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
+    h_artist = serializers.SlugRelatedField(queryset=User.objects.all(),slug_field='name')
     class Meta:
         model = Highlights
         fields = "__all__"

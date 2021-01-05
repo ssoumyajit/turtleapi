@@ -12,10 +12,8 @@ router.register('portfolio', ArtistViewSets)
 router.register('bio', BioViewSets )
 #gallery
 router.register('gallery', GalleryViewSets)
-#work
-router.register('work', HighlightsViewSets)
 #highlights
-router.register('highlights', JudgingWorkshopViewSets)
+router.register('highlights', HighlightsViewSets)
 #jw
 router.register('jw', JudgingWorkshopViewSets)
 #events

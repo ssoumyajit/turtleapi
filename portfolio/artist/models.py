@@ -56,6 +56,7 @@ class Artist(models.Model):
             temp_thumbnail.close()
 
             return True
+            #https://stackoverflow.com/questions/23922289/django-pil-save-thumbnail-version-right-when-image-is-uploaded
     
 
 
@@ -81,6 +82,12 @@ class Gallery(models.Model):
     g_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE) # related_name="gallery") #manytoOne relationship
     g_upload_photo = models.ImageField(null =True,upload_to= scramble_uploaded_filename) 
     g_datetime = models.DateTimeField(auto_now = True)
+
+    def save(self, *args, **kwargs):
+        super(Gallery, self).save(*args, **kwargs)
+        photo = Image.open(self.g_upload_photo.path) 
+        photo.thumbnail((240,240), Image.ANTIALIAS)
+        photo.save(self.g_upload_photo.path, optimize = True, quality = 90)
     
     class Meta:
         ordering = ['-g_datetime']
@@ -92,6 +99,16 @@ class Highlights(models.Model):
     h_date = models.DateField(blank = True)
     h_content = models.TextField(default= "", blank = True)
     h_link = models.URLField(max_length=200, default= "",  blank = True)
+
+    def save(self, *args, **kwargs):
+        super(Highlights, self).save(*args, **kwargs)
+        photo = Image.open(self.h_photo.path) 
+        photo.thumbnail((240,180), Image.ANTIALIAS)
+        photo.save(self.h_photo.path, optimize = True, quality = 90)
+
+        #photo.save(self.h_photo.path,format="PNG", optimize=True, quality=10)
+        #if photo.mode != "RGB":
+                #photo.convert('RGB')
     
 
     def __str__(self):
@@ -105,6 +122,12 @@ class JudgingWorkshop(models.Model):
     jw_content = models.TextField(default= "", blank = True)
     jw_link = models.URLField(max_length=200, default= "", blank = True)
 
+    def save(self, *args, **kwargs):
+        super(Highlights, self).save(*args, **kwargs)
+        photo = Image.open(self.jw_photo.path) 
+        photo.thumbnail((240,180), Image.ANTIALIAS)
+        photo.save(self.jw_photo.path, optimize = True, quality = 90)
+
     def __str__(self):
         return self.jw_date
 
@@ -115,6 +138,12 @@ class Events(models.Model):
     ev_date = models.DateField(blank = True)
     ev_content = models.TextField(default= "", blank = True )
     ev_link = models.URLField(max_length=200, default= "", blank = True)
+
+    def save(self, *args, **kwargs):
+        super(Highlights, self).save(*args, **kwargs)
+        photo = Image.open(self.ev_photo.path) 
+        photo.thumbnail((240,180), Image.ANTIALIAS)
+        photo.save(self.ev_photo.path, optimize = True, quality = 90)
 
     def __str__(self):
         return self.ev_date
@@ -128,3 +157,4 @@ class Events(models.Model):
 
 #gallery limit:
 #https://stackoverflow.com/questions/31846152/limit-number-of-foreign-keys-based-on-how-many-foreign-keys-refer-to-that-model
+

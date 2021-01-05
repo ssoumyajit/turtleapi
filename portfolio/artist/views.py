@@ -40,10 +40,10 @@ class HighlightsViewSets(viewsets.ModelViewSet):
     queryset = Highlights.objects.all()
     serializer_class = HighlightsSerializers
     filter_backends = [filters.SearchFilter]
-    search_fields = ['w_artist__name']
+    search_fields = ['h_artist__name']
 
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    #authentication_classes = (JWTAuthentication,)
+    #permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class JudgingWorkshopViewSets(viewsets.ModelViewSet):
