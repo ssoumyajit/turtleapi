@@ -61,7 +61,7 @@ class Artist(models.Model):
 
 
 class Bio(models.Model):
-    b_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    b_artist = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     b_style = models.CharField(max_length = 15, default= "", blank = True)
     b_quote = models.CharField(max_length = 255, default= "", blank = True)
     b_introduction = models.TextField(default= "", blank = True)

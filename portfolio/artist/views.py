@@ -18,12 +18,15 @@ class ArtistViewSets(viewsets.ModelViewSet):
     #search_fields = ['username__name']
 
     #authentication_classes = (TokenAuthentication,)
-    #authentication_classes = (JWTAuthentication,)
-    #permission_classes = (IsAuthenticatedOrReadOnly,)
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class BioViewSets(viewsets.ModelViewSet):
     queryset = Bio.objects.all()
     serializer_class = BioSerializers
+    lookup_field = "b_artist__name"
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 class GalleryViewSets(viewsets.ModelViewSet):
     queryset = Gallery.objects.all()
@@ -42,8 +45,8 @@ class HighlightsViewSets(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['h_artist__name']
 
-    #authentication_classes = (JWTAuthentication,)
-    #permission_classes = (IsAuthenticatedOrReadOnly,)
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class JudgingWorkshopViewSets(viewsets.ModelViewSet):

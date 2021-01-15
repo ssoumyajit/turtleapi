@@ -21,16 +21,43 @@ class Sharing(models.Model):
     s_date = models.DateField(auto_now = True)  #keeping track of the user's posting time.
     s_location = models.CharField(max_length = 30)
     
-    voters_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "votes")
+    #voters_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = "votes")
         
     
     class Meta:
         ordering = ['s_date']
 
+class LikesToSharing(models.Model):
+    LOVE = 'LO'
+    DOPE = 'DO'
+    INSPIRING = 'IS'
+    RESPECT = 'RS'
+    CUTE = 'CT'
+    INFORMATIVE = 'IF'
+    EMOTIONAL = 'EM'
+
+    HOW_YOU_LIKE_IT_CHOICES = [
+        (LOVE, 'love'),
+        (DOPE, 'dope'),
+        (INSPIRING, 'inspiring'),
+        (RESPECT, 'respect'),
+        (CUTE, 'cute'),
+        (INFORMATIVE, 'informative'),
+        (EMOTIONAL, 'emotional'),
+    ]
+    
+    l_shareid = models.ForeignKey('Sharing', on_delete=models.CASCADE, related_name = "likes_sharing")
+    l_liker = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    l_type = models.CharField(
+        max_length = 2,
+        choices= HOW_YOU_LIKE_IT_CHOICES,
+        default = LOVE
+    )
+
 
 class Comments(models.Model):
-    shareid = models.ForeignKey('Sharing', on_delete=models.CASCADE, related_name = "comment")
-    commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name = "commenter")
-    comment = models.CharField(max_length = 255) #add a validation here.
-
+    c_shareid = models.ForeignKey('Sharing', on_delete=models.CASCADE, related_name = "comments_sharing")
+    c_commenter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    c_comment = models.CharField(max_length = 255) #add a validation here.
+    #may be here just a like option embedded directly, no types of like.
 
