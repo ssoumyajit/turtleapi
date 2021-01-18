@@ -1,0 +1,112 @@
+Date : 2021-01-13 14:57:34
+Directory : /home/ebm/Documents/RiverWorks/turtleapi
+Total : 70 files,  1812 codes, 339 comments, 563 blanks, all 2714 lines
+
+Languages
++------------------+------------+------------+------------+------------+------------+
+| language         | files      | code       | comment    | blank      | total      |
++------------------+------------+------------+------------+------------+------------+
+| Python           |         65 |      1,632 |        329 |        516 |      2,477 |
+| Markdown         |          1 |        100 |          0 |         32 |        132 |
+| pip requirements |          1 |         54 |          0 |          1 |         55 |
+| JSON             |          1 |         11 |          0 |          1 |         12 |
+| Docker           |          1 |          9 |          1 |          6 |         16 |
+| YAML             |          1 |          6 |          9 |          7 |         22 |
++------------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                              | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                 |         70 |      1,812 |        339 |        563 |      2,714 |
+| portfolio                                                                                         |         65 |      1,632 |        329 |        516 |      2,477 |
+| portfolio/artist                                                                                  |         13 |        440 |         74 |        131 |        645 |
+| portfolio/artist/migrations                                                                       |          4 |        121 |          3 |         20 |        144 |
+| portfolio/filter                                                                                  |          8 |         80 |          7 |         39 |        126 |
+| portfolio/filter/migrations                                                                       |          2 |         23 |          1 |          8 |         32 |
+| portfolio/myhood                                                                                  |         11 |        115 |          8 |         36 |        159 |
+| portfolio/myhood/migrations                                                                       |          3 |         42 |          2 |         14 |         58 |
+| portfolio/portfolio                                                                               |          6 |        634 |        165 |        179 |        978 |
+| portfolio/portfolio/migrations                                                                    |          2 |        144 |          1 |          8 |        153 |
+| portfolio/sharing                                                                                 |         15 |        188 |         13 |         72 |        273 |
+| portfolio/sharing/migrations                                                                      |          7 |        108 |          6 |         38 |        152 |
+| portfolio/user                                                                                    |         10 |        148 |         52 |         51 |        251 |
+| portfolio/user/migrations                                                                         |          2 |         26 |          1 |          8 |         35 |
++---------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| filename                                                                                          | language         | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
+| /home/ebm/Documents/RiverWorks/turtleapi/Dockerfile                                               | Docker           |          9 |          1 |          6 |         16 |
+| /home/ebm/Documents/RiverWorks/turtleapi/README.md                                                | Markdown         |        100 |          0 |         32 |        132 |
+| /home/ebm/Documents/RiverWorks/turtleapi/docker-compose.yml                                       | YAML             |          6 |          9 |          7 |         22 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/__init__.py                             | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/admin.py                                | Python           |          8 |          1 |          2 |         11 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/apps.py                                 | Python           |          3 |          0 |          3 |          6 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/migrations/0001_initial.py              | Python           |         85 |          1 |          7 |         93 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/migrations/0002_auto_20210105_0359.py   | Python           |         22 |          1 |          6 |         29 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/migrations/0003_auto_20210113_0058.py   | Python           |         14 |          1 |          6 |         21 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/migrations/__init__.py                  | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/models.py                               | Python           |        109 |         16 |         36 |        161 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/oldviews.py                             | Python           |         61 |         26 |         23 |        110 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/serializers.py                          | Python           |         65 |         11 |         20 |         96 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/tests.py                                | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/urls.py                                 | Python           |         23 |         10 |          9 |         42 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/artist/views.py                                | Python           |         49 |          6 |         15 |         70 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/__init__.py                             | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/apps.py                                 | Python           |          3 |          0 |          3 |          6 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/migrations/0001_initial.py              | Python           |         23 |          1 |          7 |         31 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/migrations/__init__.py                  | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/models.py                               | Python           |          6 |          0 |          2 |          8 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/serializers.py                          | Python           |         10 |          0 |          5 |         15 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/urls.py                                 | Python           |         13 |          1 |          3 |         17 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/filter/views.py                                | Python           |         25 |          5 |         17 |         47 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/gif.py                                         | Python           |         12 |          8 |          3 |         23 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/manage.py                                      | Python           |         15 |          2 |          5 |         22 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/__init__.py                             | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/admin.py                                | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/apps.py                                 | Python           |          3 |          0 |          3 |          6 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/migrations/0001_initial.py              | Python           |         26 |          1 |          7 |         34 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/migrations/0002_post.py                 | Python           |         16 |          1 |          6 |         23 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/migrations/__init__.py                  | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/models.py                               | Python           |         15 |          1 |          5 |         21 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/serializers.py                          | Python           |         19 |          0 |          1 |         20 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/tests.py                                | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/urls.py                                 | Python           |         11 |          3 |          5 |         19 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/myhood/views.py                                | Python           |         23 |          0 |          3 |         26 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/__init__.py                          | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/migrations/0001_initial.py           | Python           |        144 |          1 |          7 |        152 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/migrations/__init__.py               | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/settings.py                          | Python           |         93 |         39 |         38 |        170 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/urls.py                              | Python           |        393 |        117 |        127 |        637 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/portfolio/wsgi.py                              | Python           |          4 |          8 |          5 |         17 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/__init__.py                            | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/admin.py                               | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/apps.py                                | Python           |          3 |          0 |          3 |          6 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0001_initial.py             | Python           |         27 |          1 |          7 |         35 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0002_auto_20201209_0611.py  | Python           |         17 |          1 |          6 |         24 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0003_sharing_voters_like.py | Python           |         14 |          1 |          6 |         21 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0004_auto_20201209_0728.py  | Python           |         19 |          1 |          6 |         26 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0005_comments.py            | Python           |         19 |          1 |          6 |         26 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/0006_auto_20201224_0725.py  | Python           |         12 |          1 |          6 |         19 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/migrations/__init__.py                 | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/models.py                              | Python           |         25 |          0 |         12 |         37 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/serializers.py                         | Python           |         19 |          3 |          5 |         27 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/tests.py                               | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/urls.py                                | Python           |         10 |          2 |          5 |         17 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/sharing/views.py                               | Python           |         21 |          0 |          4 |         25 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/__init__.py                               | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/admin.py                                  | Python           |          3 |          1 |          1 |          5 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/apps.py                                   | Python           |          3 |          0 |          3 |          6 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/migrations/0001_initial.py                | Python           |         26 |          1 |          7 |         34 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/migrations/__init__.py                    | Python           |          0 |          0 |          1 |          1 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/models.py                                 | Python           |         25 |          7 |          5 |         37 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/serializers.py                            | Python           |         49 |         26 |         15 |         90 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/tests.py                                  | Python           |          1 |          1 |          2 |          4 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/urls.py                                   | Python           |         11 |          2 |          4 |         17 |
+| /home/ebm/Documents/RiverWorks/turtleapi/portfolio/user/views.py                                  | Python           |         30 |         14 |         12 |         56 |
+| /home/ebm/Documents/RiverWorks/turtleapi/requirements.txt                                         | pip requirements |         54 |          0 |          1 |         55 |
+| /home/ebm/Documents/RiverWorks/turtleapi/zappa_settings.json                                      | JSON             |         11 |          0 |          1 |         12 |
+| Total                                                                                             |                  |      1,812 |        339 |        563 |      2,714 |
++---------------------------------------------------------------------------------------------------+------------------+------------+------------+------------+------------+
