@@ -551,9 +551,6 @@ urlpatterns = [
     path('api/v1/filter/', include('filter.urls')),
     path('api/v1/artist/', include('artist.urls')),
     path('api/v1/e1t1/', include('sharing.urls')),
-    path('api/v1/', include('myhood.urls'))
-    
-    
 
 ]
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from portfolio.artist.models import Bio, Artist, Gallery, Highlights, Events, JudgingWorkshop
-from portfolio.user.models import User
+from .models import Bio, Artist, Gallery, Highlights, Events, JudgingWorkshop
+from user.models import User
 
 
 class ArtistSerializers(serializers.ModelSerializer):

@@ -51,11 +51,10 @@ INSTALLED_APPS = [
     'filter',
     'artist',
     'sharing',
-    'myhood'
-    
-    
+
 ]
 
+ORGS_SLUGFIELD = 'django_extensions.db.fields.AutoSlugField'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',

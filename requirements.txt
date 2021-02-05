@@ -1,4 +1,5 @@
 argcomplete==1.12.1
+artist==0.18.2
 boto3==1.16.19
 botocore==1.19.19
 certifi==2020.6.20
@@ -11,8 +12,10 @@ Django==2.2.6
 django-appconf==1.0.4
 django-cors-headers==3.2.0
 django-countries==6.1.2
+django-extensions==3.1.0
 django-filter==2.3.0
 django-imagekit==4.0.2
+django-organizations==2.0.0
 djangorestframework==3.10.3
 djangorestframework-jwt==1.11.0
 djangorestframework-simplejwt==4.4.0
@@ -23,9 +26,11 @@ idna==2.10
 imageio==2.9.0
 imageio-ffmpeg==0.4.2
 importlib-metadata==1.7.0
+Jinja2==2.11.2
 jmespath==0.10.0
 kappa==0.6.0
 Markdown==3.2.2
+MarkupSafe==1.1.1
 moviepy==1.0.3
 numpy==1.19.1
 pilkit==2.0

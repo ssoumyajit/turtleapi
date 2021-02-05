@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Bio, Artist, Highlights, Gallery, Events, JudgingWorkshop
 from rest_framework import viewsets
-from portfolio.artist.serializers import BioSerializers, ArtistSerializers, GallerySerializers, HighlightsSerializers, JudgingWorkshopSerializers, EventsSerializers
+from .serializers import BioSerializers, ArtistSerializers, GallerySerializers, HighlightsSerializers, JudgingWorkshopSerializers, EventsSerializers
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework import filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
