@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    'django.middleware.common.CommonMiddleware',   # it includes default append-slash =true
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -72,7 +72,7 @@ ROOT_URLCONF = 'portfolio.urls'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        #'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
         #'rest_framework.authentication.TokenAuthentication',
         #register the session auth so that, u can see the person who is loggedin in browsable API
         #that person's session is running. u can access admin if that credential is of an admin.
@@ -163,7 +163,7 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/' # add this
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # add this
 
-AUTH_USER_MODEL = 'user.User'  #'nameOfApp.Model'
+AUTH_USER_MODEL = 'user.User'  # 'nameOfApp.Model'
 
-#query
-#https://medium.com/swlh/searching-in-django-rest-framework-45aad62e7782
+# query
+# https://medium.com/swlh/searching-in-django-rest-framework-45aad62e7782

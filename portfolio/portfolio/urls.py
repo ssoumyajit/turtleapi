@@ -74,31 +74,31 @@ class NonStrippingTextField(TextField):
 
 
 w_dancestyles = (
-    ("",""),
-    ("HipHop","HipHop"),
-    ("HipHop Freestyle","HipHop Freestyle"),
-    ("Breaking","Breaking"),
-    ("House","House"),  
-    ("Locking","Locking"),
-    ("Popping","Popping"),
-    ("Waacking","Waacking"),
-    ("Krump","Krump"),
-    ("Vouge","Vouge"),
-    ("Litefeet","Litefeet"),
-    ("Tutting","Tutting"),
-    ("Flexing","Flexing"),
-    ("Footwork","Footwork"),
-    ("Handstyle","Handstyle"),
-    ("Waving","Waving"),
-    ("Animation","Animation"),
-    ("Urban","Urban"),
-    ("Choreography","Choreography"),
-    ("Freestyle","Freestyle"),
-    ("Afro","Afro"),
-    ("Jazz","Jazz"),
-    ("Salsa","Salsa"),
-    ("Contemporary","Contemporary"),
-    ("Experimental","Experimental"),  
+    ("", ""),
+    ("HipHop", "HipHop"),
+    ("HipHop Freestyle", "HipHop Freestyle"),
+    ("Breaking", "Breaking"),
+    ("House", "House"),
+    ("Locking", "Locking"),
+    ("Popping", "Popping"),
+    ("Waacking", "Waacking"),
+    ("Krump", "Krump"),
+    ("Vouge", "Vouge"),
+    ("Litefeet", "Litefeet"),
+    ("Tutting", "Tutting"),
+    ("Flexing", "Flexing"),
+    ("Footwork", "Footwork"),
+    ("Handstyle", "Handstyle"),
+    ("Waving", "Waving"),
+    ("Animation", "Animation"),
+    ("Urban", "Urban"),
+    ("Choreography", "Choreography"),
+    ("Freestyle", "Freestyle"),
+    ("Afro", "Afro"),
+    ("Jazz", "Jazz"),
+    ("Salsa", "Salsa"),
+    ("Contemporary", "Contemporary"),
+    ("Experimental", "Experimental"),
 )
 
 #cretae a simple model
@@ -526,6 +526,8 @@ class FileuploadViewSet(viewsets.ModelViewSet):
 #------------------------------------------------------------------------------
 
 router = routers.DefaultRouter()
+
+"""
 router.register(r'portfolio', PortfolioViewSet)
 router.register(r'workshop', WorkshopViewSet)
 router.register(r'judging', JudgingViewSet)
@@ -539,29 +541,26 @@ router.register(r'biography', BiographyViewSet)
 
 router.register(r'fileupload', FileuploadViewSet)
 #router.register(r'portfoliomini', PortfolioMiniViewSet)
+"""
 
-#wire up the API using automatic URL routing
+# wire up the API using automatic URL routing
 urlpatterns = [
+    # path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
-    #path('api/v1/gallery/', GalleryViewSet.as_view({'get': 'list'}), name = 'gallery' ),
-    #Spath('api/v1/gallery/(?P<username>\s+)/$', GalleryListView.as_view(), name='user_gallery'),
-    #path('api/v1/gallery/<str:username>/', GalleryListView.as_view()),
     path('api/v1/user/', include('user.urls')),
-    path('api/v1/filter/', include('filter.urls')),
     path('api/v1/artist/', include('artist.urls')),
     path('api/v1/e1t1/', include('sharing.urls')),
-    path('api/v1/', include('myhood.urls'))
-    
-    
-
+]
+urlpatterns += [
+    path('api-auth/', include('rest_framework.urls'))
 ]
 
-#configure before production
+# configure before production
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
-    #this line helps to avail media url in our development server and we dont need a separate
-    #webserver just to serve image files
+    # this line helps to avail media url in our development server and we dont need a separate
+    # webserver just to serve image files
 
 
 '''

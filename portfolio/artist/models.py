@@ -9,7 +9,15 @@ from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
 import os.path
-from portfolio.portfolio.settings import COVER_THUMBNAIL_SIZE
+from portfolio.settings import COVER_THUMBNAIL_SIZE
+
+
+def scramble_uploaded_filename(file):
+
+    now = str(int(time.time()))
+    filepath = 'gallery/'
+    extension = file.split(".")[-1]
+    return "{}+{}.{}".format(filepath, uuid.uuid4(), extension)
 
 
 class Artist(models.Model):
@@ -51,39 +59,27 @@ class Artist(models.Model):
         # https://stackoverflow.com/questions/23922289/django-pil-save-thumbnail-version-right-when-image-is-uploaded
 
 
-class Bio(models.Model):
-    b_artist = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    b_style = models.CharField(max_length=15, default="", blank=True)
-    b_quote = models.CharField(max_length=255, default="", blank=True)
-    b_introduction = models.TextField(default="", blank=True)
-    b_crew = models.CharField(max_length=255, default="", blank=True)
-    b_ig = models.URLField(max_length=200, default="", blank=True)
-    b_fb = models.URLField(max_length=200, default="", blank=True)
-    b_personal = models.URLField(max_length=200, default="", blank=True)
+class ArtistData(models.Model):
+    username = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="artistdata")
+    style = models.CharField(max_length=15, default="", blank=True)
+    quote = models.CharField(max_length=255, default="", blank=True)
+    introduction = models.TextField(default="", blank=True)
+    crew = models.CharField(max_length=255, default="", blank=True)
+    ig = models.URLField(max_length=200, default="", blank=True)
+    fb = models.URLField(max_length=200, default="", blank=True)
+    site = models.URLField(max_length=200, default="", blank=True)
+    gallery1 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
+    gallery2 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
+    gallery3 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
+    gallery4 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
 
-
-class Gallery(models.Model):
-
-    @staticmethod
-    def scramble_uploaded_filename(self, file):
-
-        now = str(int(time.time()))
-        filepath = 'gallery/'
-        extension = file.split(".")[-1]
-        return "{}+{}.{}".format(filepath, uuid.uuid4(), extension)
-
-    g_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # related_name="gallery") #manytoOne relationship
-    g_upload_photo = models.ImageField(null=True, upload_to=scramble_uploaded_filename)
-    g_datetime = models.DateTimeField(auto_now = True)
-
-    def save(self, *args, **kwargs):
-        super(Gallery, self).save(*args, **kwargs)
-        photo = Image.open(self.g_upload_photo.path) 
-        photo.thumbnail((240, 240), Image.ANTIALIAS)
-        photo.save(self.g_upload_photo.path, optimize=True, quality=90)
-    
-    class Meta:
-        ordering = ['-g_datetime']
+    """
+        def save(self, *args, **kwargs):
+        super(ArtistData, self).save(*args, **kwargs)
+        gallery1 = Image.open(self.gallery1.path)
+        gallery1.thumbnail((240, 240), Image.ANTIALIAS)
+        gallery1.save(self.gallery1.path, optimize=True, quality=90)
+    """
 
 
 class Highlights(models.Model):
@@ -104,33 +100,15 @@ class Highlights(models.Model):
         return self.h_date
 
 
-class JudgingWorkshop(models.Model):
-    jw_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
-    jw_event = models.CharField(max_length=30, default="", blank=False)  # must
-    jw_photo = models.ImageField(default="", upload_to="judgingworkshop/", blank=False)  # must
-    jw_date = models.DateField(null=True, blank=True)
-    jw_content = models.TextField(default="", blank=True)
-    jw_link = models.URLField(max_length=200, default="", blank=True)
-
-    def save(self, *args, **kwargs):
-        super(JudgingWorkshop, self).save(*args, **kwargs)
-        photo = Image.open(self.jw_photo.path) 
-        photo.thumbnail((240, 180), Image.ANTIALIAS)
-        photo.save(self.jw_photo.path, optimize=True, quality=90)
-
-    def __str__(self):
-        return self.jw_date
-
-
 class Events(models.Model):
     ev_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
-    ev_event = models.CharField(max_length=20, default="", blank=False) # must
+    ev_event = models.CharField(max_length=255, default="", blank=False)  # must
     ev_photo = models.ImageField(default="", upload_to="events_attended/", blank=False)  # must
     ev_date = models.DateField(null=True, blank=True)
     ev_content = models.TextField(default="", blank=True)
-    ev_link = models.URLField(max_length=200, default="", blank=True)
+    ev_link = models.URLField(max_length=255, default="", blank=True)
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, ** kwargs):
         super(Events, self).save(*args, **kwargs)
         photo = Image.open(self.ev_photo.path) 
         photo.thumbnail((240, 180), Image.ANTIALIAS)

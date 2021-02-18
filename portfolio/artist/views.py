@@ -1,41 +1,76 @@
 from django.shortcuts import render
-from .models import Bio, Artist, Highlights, Gallery, Events, JudgingWorkshop
+from .models import Artist, ArtistData, Highlights, Events
 from rest_framework import viewsets
-from portfolio.artist.serializers import BioSerializers, ArtistSerializers, GallerySerializers, HighlightsSerializers, JudgingWorkshopSerializers, EventsSerializers
+from artist.serializers import ArtistSerializers, ArtistDataSerializers, HighlightsSerializers, EventsSerializers
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import permissions
 from rest_framework import filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from .permissions import IsOwnerOrReadonly
+from rest_framework import generics
 
 
+class ArtistListCreateViews(generics.ListCreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializers
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+    # filtering which artists to be shown
+    # may be filter using dance style, teachers later
+    """
+        def get_queryset(self):
+        # Filter active products
+            return Product.objects.filter(active=True)
+    """
+
+
+class ArtistRetrieveUpdateDestroyViews(generics.RetrieveUpdateDestroyAPIView):
+    # retrieve stands for read-only endpoints to represent a single model instance.
+    queryset = Artist.objects.all()
+    serializer_class = ArtistSerializers
+    # lookup_field = "username"
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
+
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)   # uses the id field of user object, it seems.
+
+
+class ArtistDataCreateViews(generics.CreateAPIView):
+    queryset = Artist.objects.all()
+    serializer_class = ArtistDataSerializers
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class ArtistDataRetrieveUpdateDestroyViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = ArtistData.objects.all()
+    serializer_class = ArtistDataSerializers
+    # lookup_field = 'owner'
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
+
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)
+
+
+
+
+"""
 class ArtistViewSets(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializers
-    lookup_field = "username__name"     # previously we were using it for update
+    lookup_field = "owner__name"     # previously we were using it for update
+    authentication_classes = (JWTAuthentication,)  # might need to add session-auth
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
+
+
+class ArtistDataViewSets(viewsets.ModelViewSet):
+    queryset = ArtistData.objects.all()
+    serializer_class = ArtistDataSerializers
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsOwnerOrReadonly,)
+
     # but let's keep it uniform and use the "id" for update from UI. now we require ?search=username option.
     # filter_backends = [filters.SearchFilter]
     # search_fields = ['username__name']
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
-class BioViewSets(viewsets.ModelViewSet):
-    queryset = Bio.objects.all()
-    serializer_class = BioSerializers
-    lookup_field = "b_artist__name"
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
-class GalleryViewSets(viewsets.ModelViewSet):
-    queryset = Gallery.objects.all()
-    serializer_class = GallerySerializers
-    # lookup_field = "g_artist__name"     #we won't use it here, coz, multiple instances available
-    # which cannot be shown under a single URL.
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['g_artist__name']
-    
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class HighlightsViewSets(viewsets.ModelViewSet):
@@ -43,16 +78,6 @@ class HighlightsViewSets(viewsets.ModelViewSet):
     serializer_class = HighlightsSerializers
     filter_backends = [filters.SearchFilter]
     search_fields = ['h_artist__name']
-
-    authentication_classes = (JWTAuthentication,)
-    permission_classes = (IsAuthenticatedOrReadOnly,)
-
-
-class JudgingWorkshopViewSets(viewsets.ModelViewSet):
-    queryset = JudgingWorkshop.objects.all()
-    serializer_class = JudgingWorkshopSerializers
-    filter_backends = [filters.SearchFilter]
-    search_fields = ['jw_artist__name']
 
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
@@ -66,4 +91,4 @@ class EventsViewSets(viewsets.ModelViewSet):
 
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticatedOrReadOnly,)
-
+"""
