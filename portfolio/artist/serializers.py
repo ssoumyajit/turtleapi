@@ -30,6 +30,7 @@ class ArtistSerializers(serializers.ModelSerializer):
 
 class ArtistDataSerializers(serializers.ModelSerializer):
     # ownerdata = serializers.ReadOnlyField(source='ownerdata.name')
+    username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
     class Meta:
         model = ArtistData

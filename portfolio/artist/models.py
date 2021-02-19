@@ -68,10 +68,10 @@ class ArtistData(models.Model):
     ig = models.URLField(max_length=200, default="", blank=True)
     fb = models.URLField(max_length=200, default="", blank=True)
     site = models.URLField(max_length=200, default="", blank=True)
-    gallery1 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
-    gallery2 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
-    gallery3 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
-    gallery4 = models.ImageField(null=True, blank=True, upload_to=scramble_uploaded_filename)
+    gallery1 = models.ImageField(null=True, blank=True, upload_to='gallery/')
+    gallery2 = models.ImageField(null=True, blank=True, upload_to='gallery/')
+    gallery3 = models.ImageField(null=True, blank=True, upload_to='gallery/')
+    gallery4 = models.ImageField(null=True, blank=True, upload_to='gallery/')
 
     """
         def save(self, *args, **kwargs):
