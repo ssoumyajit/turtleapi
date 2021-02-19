@@ -9,7 +9,14 @@ from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
 import os.path
-from portfolio.portfolio.settings import COVER_THUMBNAIL_SIZE
+from portfolio.settings import COVER_THUMBNAIL_SIZE
+
+
+def scramble_uploaded_filename(file):
+    now = str(int(time.time()))
+    filepath = 'gallery/'
+    extension = file.split(".")[-1]
+    return "{}+{}.{}".format(filepath, uuid.uuid4(), extension)
 
 
 class Artist(models.Model):
@@ -64,17 +71,9 @@ class Bio(models.Model):
 
 class Gallery(models.Model):
 
-    @staticmethod
-    def scramble_uploaded_filename(self, file):
-
-        now = str(int(time.time()))
-        filepath = 'gallery/'
-        extension = file.split(".")[-1]
-        return "{}+{}.{}".format(filepath, uuid.uuid4(), extension)
-
     g_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # related_name="gallery") #manytoOne relationship
     g_upload_photo = models.ImageField(null=True, upload_to=scramble_uploaded_filename)
-    g_datetime = models.DateTimeField(auto_now = True)
+    g_datetime = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
         super(Gallery, self).save(*args, **kwargs)

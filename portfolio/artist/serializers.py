@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from portfolio.artist.models import Bio, Artist, Gallery, Highlights, Events, JudgingWorkshop
-from portfolio.user.models import User
+from .models import Bio, Artist, Gallery, Highlights, Events, JudgingWorkshop
+from user.models import User
 
 
 class ArtistSerializers(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class ArtistSerializers(serializers.ModelSerializer):
 
 class BioSerializers(serializers.ModelSerializer):
     """
-    dedicated artist serializer for Artist creation.
+    qdedicated artist serializer for Artist creation.
     """
     b_artist = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
