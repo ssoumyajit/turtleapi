@@ -1,8 +1,7 @@
 from django.shortcuts import render
 from .models import Artist, ArtistData, Highlights, Events
-from rest_framework import viewsets
-from artist.serializers import ArtistSerializers, ArtistDataSerializers, HighlightsSerializers, EventsSerializers
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .serializers import ArtistSerializers, ArtistDataSerializers, HighlightsSerializers, EventsSerializers
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import permissions
 from rest_framework import filters
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -28,7 +27,7 @@ class ArtistRetrieveUpdateDestroyViews(generics.RetrieveUpdateDestroyAPIView):
     # retrieve stands for read-only endpoints to represent a single model instance.
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializers
-    # lookup_field = "username"
+    lookup_field = "username__name"
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
 
     def perform_create(self, serializer):
@@ -44,11 +43,36 @@ class ArtistDataCreateViews(generics.CreateAPIView):
 class ArtistDataRetrieveUpdateDestroyViews(generics.RetrieveUpdateDestroyAPIView):
     queryset = ArtistData.objects.all()
     serializer_class = ArtistDataSerializers
-    # lookup_field = 'owner'
+    lookup_field = 'username__name'
     permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
 
     def perform_create(self, serializer):
         serializer.save(username=self.request.user)
+
+
+class HighlightsListCreateViews(generics.ListCreateAPIView):
+    queryset = Highlights.objects.all()
+    serializer_class = HighlightsSerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username__name']
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    # just use explicit queryset n filter
+
+
+class HighlightsRUDViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Highlights.objects.all()
+    serializer_class = HighlightsSerializers
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
+    # lookup_field - using instance id.
+
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)
+
+
+"""
+class HighlightsRUDViews(generics.RetrieveUpdateDestroyAPIView):
+"""
 
 
 

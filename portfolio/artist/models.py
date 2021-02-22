@@ -83,7 +83,7 @@ class ArtistData(models.Model):
 
 
 class Highlights(models.Model):
-    h_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
     h_context = models.CharField(max_length=255, default="", blank=False)  # must
     h_photo = models.ImageField(default="", upload_to="work/", blank=False)  # must
     h_date = models.DateField(null=True, blank=True)  # blank is for admin, null is for db.

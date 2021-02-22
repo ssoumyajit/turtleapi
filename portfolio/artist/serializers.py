@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from artist.models import Artist, ArtistData, Highlights, Events
+from .models import Artist, ArtistData, Highlights, Events
 from user.models import User
 # from portfolio import settings
 
@@ -12,7 +12,7 @@ class ArtistSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = ['id', 'username', 'artist_name', 'cover', 'thumb', 'country']
+        fields = ['username', 'artist_name', 'cover', 'thumb', 'country']
         # extra_kwargs = {
         # 'url': {'lookup_field': 'owner'}
         # }
@@ -34,12 +34,12 @@ class ArtistDataSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = ArtistData
-        fields = ['id', 'username', 'style', 'quote', 'introduction', 'crew', 'ig', 'fb', 'site', 'gallery1', 'gallery2',
+        fields = ['username', 'style', 'quote', 'introduction', 'crew', 'ig', 'fb', 'site', 'gallery1', 'gallery2',
                   'gallery2', 'gallery3', 'gallery4']
 
 
 class HighlightsSerializers(serializers.ModelSerializer):
-    # h_artist = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
+    username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
     class Meta:
         model = Highlights
