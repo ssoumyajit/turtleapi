@@ -89,6 +89,9 @@ class Highlights(models.Model):
     h_date = models.DateField(null=True, blank=True)  # blank is for admin, null is for db.
     h_content = models.TextField(default="", blank=True)
     h_link = models.URLField(max_length=200, default="",  blank=True)
+    # add 5 photos to really talk about this highlight of yours.
+    # make 2 different serializers where the 2nd one will be used to
+    # fetch these extra photos only when retrieved... that means when the user clicks on this card.
 
     def save(self, *args, **kwargs):
         super(Highlights, self).save(*args, **kwargs)
@@ -100,22 +103,22 @@ class Highlights(models.Model):
         return self.h_date
 
 
-class Events(models.Model):
-    ev_artist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
-    ev_event = models.CharField(max_length=255, default="", blank=False)  # must
-    ev_photo = models.ImageField(default="", upload_to="events_attended/", blank=False)  # must
-    ev_date = models.DateField(null=True, blank=True)
-    ev_content = models.TextField(default="", blank=True)
-    ev_link = models.URLField(max_length=255, default="", blank=True)
+class Journey(models.Model):
+    joartist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
+    joevent = models.CharField(max_length=255, default="", blank=False)  # must
+    jophoto = models.ImageField(default="", upload_to="events_attended/", blank=False)  # must
+    jodate = models.DateField(null=True, blank=True)
+    jocontent = models.TextField(default="", blank=True)
+    jolink = models.URLField(max_length=255, default="", blank=True)
 
     def save(self, *args, ** kwargs):
-        super(Events, self).save(*args, **kwargs)
-        photo = Image.open(self.ev_photo.path) 
+        super(Journey, self).save(*args, **kwargs)
+        photo = Image.open(self.jophoto.path)
         photo.thumbnail((240, 180), Image.ANTIALIAS)
-        photo.save(self.ev_photo.path, optimize=True, quality=90)
+        photo.save(self.jophoto.path, optimize=True, quality=90)
 
     def __str__(self):
-        return self.ev_date
+        return self.jodate
 
 
 # null = True means, when u do not put anything in the field , it will be set NULL in the database

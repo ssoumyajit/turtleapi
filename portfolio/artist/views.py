@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .models import Artist, ArtistData, Highlights, Events
-from .serializers import ArtistSerializers, ArtistDataSerializers, HighlightsSerializers, EventsSerializers
+from .models import Artist, ArtistData, Highlights, Journey
+from .serializers import ArtistSerializers, ArtistDataSerializers, HighlightsSerializers, JourneySerializers
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from rest_framework import permissions
 from rest_framework import filters

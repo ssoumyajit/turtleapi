@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Artist, ArtistData, Highlights, Events
+from .models import Artist, ArtistData, Highlights, Journey
 from user.models import User
 # from portfolio import settings
 
@@ -46,11 +46,11 @@ class HighlightsSerializers(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class EventsSerializers(serializers.ModelSerializer):
-    ev_artist = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
+class JourneySerializers(serializers.ModelSerializer):
+    joartist = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
     class Meta:
-        model = Events
+        model = Journey
         fields = "__all__"
 # ------------------------------------------------------------
 
