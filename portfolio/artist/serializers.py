@@ -47,7 +47,7 @@ class HighlightsSerializers(serializers.ModelSerializer):
 
 
 class JourneySerializers(serializers.ModelSerializer):
-    joartist = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
+    username = serializers.SlugRelatedField(queryset=User.objects.all(), slug_field='name')
 
     class Meta:
         model = Journey

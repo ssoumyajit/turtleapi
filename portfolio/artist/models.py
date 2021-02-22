@@ -84,11 +84,11 @@ class ArtistData(models.Model):
 
 class Highlights(models.Model):
     username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
-    h_context = models.CharField(max_length=255, default="", blank=False)  # must
-    h_photo = models.ImageField(default="", upload_to="work/", blank=False)  # must
-    h_date = models.DateField(null=True, blank=True)  # blank is for admin, null is for db.
-    h_content = models.TextField(default="", blank=True)
-    h_link = models.URLField(max_length=200, default="",  blank=True)
+    hicontext = models.CharField(max_length=255, default="", blank=False)  # must
+    hiphoto = models.ImageField(default="", upload_to="work/", blank=False)  # must
+    hidate = models.DateField(null=True, blank=True)  # blank is for admin, null is for db.
+    hicontent = models.TextField(default="", blank=True)
+    hilink = models.URLField(max_length=200, default="",  blank=True)
     # add 5 photos to really talk about this highlight of yours.
     # make 2 different serializers where the 2nd one will be used to
     # fetch these extra photos only when retrieved... that means when the user clicks on this card.
@@ -104,7 +104,7 @@ class Highlights(models.Model):
 
 
 class Journey(models.Model):
-    joartist = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
+    username = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # must
     joevent = models.CharField(max_length=255, default="", blank=False)  # must
     jophoto = models.ImageField(default="", upload_to="events_attended/", blank=False)  # must
     jodate = models.DateField(null=True, blank=True)

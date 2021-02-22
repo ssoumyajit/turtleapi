@@ -70,6 +70,37 @@ class HighlightsRUDViews(generics.RetrieveUpdateDestroyAPIView):
         serializer.save(username=self.request.user)
 
 
+class JourneyListCreateViews(generics.ListCreateAPIView):
+    queryset = Journey.objects.all()
+    serializer_class = JourneySerializers
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['username__name']
+    authentication_classes = (JWTAuthentication,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+
+
+class JourneyRUDViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Journey.objects.all()
+    serializer_class = JourneySerializers
+    permission_classes = (IsAuthenticatedOrReadOnly, IsOwnerOrReadonly,)
+
+    # lookup_field - using instance id.
+
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
 class HighlightsRUDViews(generics.RetrieveUpdateDestroyAPIView):
 """
